@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:route_me/Model/Dispatcher/dispatcher.dart';
-import 'package:route_me/Pages/drivers.dart';
+import 'package:web/Model/Dispatcher/dispatcher.dart';
+import 'package:web/Pages/drivers.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class DispatcherDataSource extends DataGridSource {

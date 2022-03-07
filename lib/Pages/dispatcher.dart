@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:route_me/Model/Dispatcher/dispatcher.dart';
-import 'package:route_me/Model/Dispatcher/dispatcher_data_source.dart';
+import 'package:web/Model/Dispatcher/dispatcher.dart';
+import 'package:web/Model/Dispatcher/dispatcher_data_source.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class DispatcherPage extends StatefulWidget {

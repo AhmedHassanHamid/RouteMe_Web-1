@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:route_me/Pages/dispatcher.dart';
+import 'package:web/Pages/dispatcher.dart';
 
 
 void main() {
