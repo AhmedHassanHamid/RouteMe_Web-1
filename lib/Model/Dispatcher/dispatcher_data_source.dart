@@ -39,11 +39,7 @@ class DispatcherDataSource extends DataGridSource {
                     if (e.value['edit'])
                       FittedBox(
                           child: IconButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (_) => Drivers()));
-                              },
-                              icon: Icon(Icons.edit))),
+                              onPressed: () {}, icon: Icon(Icons.edit))),
                     if (e.value['delete'])
                       FittedBox(
                           child: IconButton(

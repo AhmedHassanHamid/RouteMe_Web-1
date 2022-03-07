@@ -39,15 +39,18 @@ class DriverDataSource extends DataGridSource {
                     if (e.value['edit'])
                       FittedBox(
                           child: IconButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (_) => Vendors()));
-                              },
-                              icon: Icon(Icons.edit))),
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.edit,
+                              ))),
                     if (e.value['delete'])
                       FittedBox(
                           child: IconButton(
-                              onPressed: () {}, icon: Icon(Icons.delete))),
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.delete,
+                                color: Color(0xffB50000),
+                              ))),
                   ],
                 ),
               )

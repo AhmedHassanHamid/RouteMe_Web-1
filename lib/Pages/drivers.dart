@@ -131,11 +131,105 @@ class _DriversState extends State<Drivers> {
             ),
             Container(
               decoration: BoxDecoration(
-                color: const Color(0xff00468B),
+                color: Color(0xff00468B),
                 borderRadius: BorderRadius.circular(40),
               ),
               height: MediaQuery.of(context).size.height * 0.58,
               width: MediaQuery.of(context).size.width * 0.34,
+              padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.04,
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.043,
+                  ),
+                  Text(
+                    "Add Drivers",
+                    style: TextStyle(fontSize: 30, color: Color(0xffffffff)),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.041,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: EdgeInsets.all(8),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        label: Text(
+                          'Name',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: EdgeInsets.all(8),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        label: Text(
+                          'Email',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: EdgeInsets.all(8),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        label: Text(
+                          'Phone',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      width: MediaQuery.of(context).size.width * 0.15,
+                      child: Text(
+                        'Save',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.white)),
+                  )
+                ],
+              ),
             )
           ],
         ),

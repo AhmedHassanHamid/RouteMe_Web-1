@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web/Pages/dispatcher.dart';
+import 'package:web/Pages/drivers.dart';
 
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const DispatcherPage(),
+      home: const Drivers(),
     );
   }
 }
