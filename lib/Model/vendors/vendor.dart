@@ -1,4 +1,4 @@
-class DriversModel {
+class VendorsModel {
   final String id;
   final String status;
   final String email;
@@ -6,18 +6,17 @@ class DriversModel {
   final String phone;
   final Map<String, dynamic> actions;
 
-  DriversModel(
+  VendorsModel(
       this.id, this.status, this.email, this.name, this.phone, this.actions);
 
-  factory DriversModel.fromJson(json) {
-    print(json['email']);
-    return DriversModel(
+  factory VendorsModel.fromJson(json) {
+    return VendorsModel(
       json['id'].toString(),
-      json['status'] ?? '',
+      "in progress",
       json['email'] ?? '',
-      json['name'] ?? '',
+      json['brandName'] ?? '',
       json['phone'] ?? '',
-      {"edit": true, "delete": true, "id": json['id'].toString()},
+      {"edit": true, "delete": true, "id": json["id"].toString()},
     );
   }
 }

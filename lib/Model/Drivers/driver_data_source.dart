@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:web/Model/Drivers/driver.dart';
+import 'package:web/Model/Drivers/driver_provider.dart';
 import 'package:web/Pages/vendors.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class DriverDataSource extends DataGridSource {
   DriverDataSource(
-      {required List<DriversModel> drivers, required this.context}) {
+      {required List<DriversModel> drivers, required this.driverProvider}) {
     _drivers = drivers
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(columnName: 'status', value: e.status),
-              DataGridCell<String>(columnName: 'email', value: e.name),
+              DataGridCell<String>(columnName: 'email', value: e.email),
               DataGridCell<String>(columnName: 'name', value: e.name),
               DataGridCell<String>(columnName: 'phone', value: e.phone),
               DataGridCell<Map<String, dynamic>>(
@@ -19,7 +20,7 @@ class DriverDataSource extends DataGridSource {
   }
 
   List<DataGridRow> _drivers = [];
-  BuildContext context;
+  DriversProvider driverProvider;
 
   @override
   List<DataGridRow> get rows => _drivers;
@@ -29,7 +30,7 @@ class DriverDataSource extends DataGridSource {
     return DataGridRowAdapter(
         cells: row.getCells().map<Widget>((e) {
       return Container(
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(color: Colors.white),
         alignment: Alignment.center,
         padding: const EdgeInsets.all(8.0),
         child: e.columnName == "actions"
@@ -46,7 +47,9 @@ class DriverDataSource extends DataGridSource {
                     if (e.value['delete'])
                       FittedBox(
                           child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                driverProvider.deleteUser(e.value['id']);
+                              },
                               icon: Icon(
                                 Icons.delete,
                                 color: Color(0xffB50000),

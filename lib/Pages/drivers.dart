@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:web/Model/Drivers/driver.dart';
 import 'package:web/Model/Drivers/driver_data_source.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:web/Model/Drivers/driver_provider.dart';
 
 class Drivers extends StatefulWidget {
   const Drivers({Key? key}) : super(key: key);
@@ -11,18 +13,17 @@ class Drivers extends StatefulWidget {
 }
 
 class _DriversState extends State<Drivers> {
-  List<DriversModel> drivers = <DriversModel>[];
-  late DriverDataSource driverDataSource;
-
   @override
-  void initState() {
-    super.initState();
-    drivers = getDriversData();
-    driverDataSource = DriverDataSource(drivers: drivers, context: context);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final driverProvider = Provider.of<DriversProvider>(context);
+    driverProvider.getDriversData();
   }
 
   @override
   Widget build(BuildContext context) {
+    final driverProvider = Provider.of<DriversProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Reebook'),
@@ -62,67 +63,68 @@ class _DriversState extends State<Drivers> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.041,
                   ),
-                  SfDataGrid(
-                    source: driverDataSource,
-                    columnWidthMode: ColumnWidthMode.fill,
-                    columns: <GridColumn>[
-                      GridColumn(
-                          columnName: 'status',
-                          label: Container(
-                              padding: EdgeInsets.all(16.0),
-                              alignment: Alignment.center,
-                              child: FittedBox(
-                                child: Text(
-                                  'Status',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ))),
-                      GridColumn(
-                          columnName: 'email',
-                          label: Container(
-                              padding: EdgeInsets.all(8.0),
-                              alignment: Alignment.center,
-                              child: FittedBox(
+                  if (driverProvider.showGrid)
+                    SfDataGrid(
+                      source: driverProvider.driverDataSource!,
+                      columnWidthMode: ColumnWidthMode.fill,
+                      columns: <GridColumn>[
+                        GridColumn(
+                            columnName: 'status',
+                            label: Container(
+                                padding: const EdgeInsets.all(16.0),
+                                alignment: Alignment.center,
+                                child: const FittedBox(
                                   child: Text(
-                                'Email',
-                                style: TextStyle(color: Colors.white),
-                              )))),
-                      GridColumn(
-                          columnName: 'name',
-                          label: Container(
-                              padding: EdgeInsets.all(8.0),
-                              alignment: Alignment.center,
-                              child: FittedBox(
-                                child: Text(
-                                  'Name',
-                                  overflow: TextOverflow.ellipsis,
+                                    'Status',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ))),
+                        GridColumn(
+                            columnName: 'email',
+                            label: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                alignment: Alignment.center,
+                                child: const FittedBox(
+                                    child: Text(
+                                  'Email',
                                   style: TextStyle(color: Colors.white),
-                                ),
-                              ))),
-                      GridColumn(
-                          columnName: 'phone',
-                          label: Container(
-                              padding: EdgeInsets.all(8.0),
-                              alignment: Alignment.center,
-                              child: FittedBox(
-                                child: Text(
-                                  'Phone',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ))),
-                      GridColumn(
-                          columnName: 'action',
-                          label: Container(
-                              padding: EdgeInsets.all(8.0),
-                              alignment: Alignment.center,
-                              child: FittedBox(
-                                child: Text(
-                                  'Action',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ))),
-                    ],
-                  )
+                                )))),
+                        GridColumn(
+                            columnName: 'name',
+                            label: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                alignment: Alignment.center,
+                                child: const FittedBox(
+                                  child: Text(
+                                    'Name',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ))),
+                        GridColumn(
+                            columnName: 'phone',
+                            label: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                alignment: Alignment.center,
+                                child: const FittedBox(
+                                  child: Text(
+                                    'Phone',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ))),
+                        GridColumn(
+                            columnName: 'action',
+                            label: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                alignment: Alignment.center,
+                                child: const FittedBox(
+                                  child: Text(
+                                    'Action',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ))),
+                      ],
+                    )
                 ],
               ),
             ),
@@ -131,7 +133,7 @@ class _DriversState extends State<Drivers> {
             ),
             Container(
               decoration: BoxDecoration(
-                color: Color(0xff00468B),
+                color: const Color(0xff00468B),
                 borderRadius: BorderRadius.circular(40),
               ),
               height: MediaQuery.of(context).size.height * 0.58,
@@ -144,7 +146,7 @@ class _DriversState extends State<Drivers> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.043,
                   ),
-                  Text(
+                  const Text(
                     "Add Drivers",
                     style: TextStyle(fontSize: 30, color: Color(0xffffffff)),
                   ),
@@ -154,11 +156,11 @@ class _DriversState extends State<Drivers> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                     decoration: BoxDecoration(
-                        color: Color(0xffE4E4E4),
+                        color: const Color(0xffE4E4E4),
                         borderRadius: BorderRadius.circular(15)),
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         label: Text(
                           'Name',
@@ -173,11 +175,11 @@ class _DriversState extends State<Drivers> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                     decoration: BoxDecoration(
-                        color: Color(0xffE4E4E4),
+                        color: const Color(0xffE4E4E4),
                         borderRadius: BorderRadius.circular(15)),
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         label: Text(
                           'Email',
@@ -192,11 +194,11 @@ class _DriversState extends State<Drivers> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                     decoration: BoxDecoration(
-                        color: Color(0xffE4E4E4),
+                        color: const Color(0xffE4E4E4),
                         borderRadius: BorderRadius.circular(15)),
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         label: Text(
                           'Phone',
@@ -235,22 +237,5 @@ class _DriversState extends State<Drivers> {
         ),
       ),
     );
-  }
-
-  List<DriversModel> getDriversData() {
-    return [
-      DriversModel("online", 'marian.adly', 'marian', "0122222222222",
-          {"edit": true, "delete": true}),
-      DriversModel("online", 'marian.adly', 'marian', "0122222222222",
-          {"edit": true, "delete": true}),
-      DriversModel("online", 'marian.adly', 'marian', "0122222222222",
-          {"edit": true, "delete": true}),
-      DriversModel("online", 'marian.adly', 'marian', "0122222222222",
-          {"edit": true, "delete": true}),
-      DriversModel("online", 'marian.adly', 'marian', "0122222222222",
-          {"edit": true, "delete": true}),
-      DriversModel("online", 'marian.adly', 'marian', "0122222222222",
-          {"edit": true, "delete": true}),
-    ];
   }
 }

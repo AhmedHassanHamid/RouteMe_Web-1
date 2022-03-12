@@ -3,7 +3,7 @@ import 'package:sizer/sizer.dart';
 import 'package:web/styles/colors.dart';
 
 class Home extends StatefulWidget {
-   Home({Key? key}) : super(key: key);
+   const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -32,7 +32,7 @@ String? value;
               child: Center(
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-                    hint: Text(
+                    hint: const Text(
                       'ID'
                     ),
                     isExpanded: true,
