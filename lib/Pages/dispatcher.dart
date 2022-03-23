@@ -71,7 +71,7 @@ class _DispatcherPageState extends State<DispatcherPage> {
                         shrinkWrapRows: true,
                         isScrollbarAlwaysShown: true,
                         verticalScrollPhysics:
-                            const AlwaysScrollableScrollPhysics(),
+                        const AlwaysScrollableScrollPhysics(),
                         columns: <GridColumn>[
                           GridColumn(
                               columnName: 'status',
@@ -139,7 +139,7 @@ class _DispatcherPageState extends State<DispatcherPage> {
             ),
             Container(
               decoration: BoxDecoration(
-                color: Color(0xff00468B),
+                color: const Color(0xff00468B),
                 borderRadius: BorderRadius.circular(40),
               ),
               height: dispatcherProvider.editMode
@@ -152,7 +152,7 @@ class _DispatcherPageState extends State<DispatcherPage> {
               ),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     "Add Dispatchers",
                     style: TextStyle(fontSize: 30, color: Color(0xffffffff)),
                   ),
@@ -162,12 +162,12 @@ class _DispatcherPageState extends State<DispatcherPage> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                     decoration: BoxDecoration(
-                        color: Color(0xffE4E4E4),
+                        color: const Color(0xffE4E4E4),
                         borderRadius: BorderRadius.circular(15)),
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: TextFormField(
                       controller: dispatcherProvider.nameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: "Name",
                         hintStyle: TextStyle(fontSize: 12),
@@ -180,12 +180,12 @@ class _DispatcherPageState extends State<DispatcherPage> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                     decoration: BoxDecoration(
-                        color: Color(0xffE4E4E4),
+                        color: const Color(0xffE4E4E4),
                         borderRadius: BorderRadius.circular(15)),
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: TextFormField(
                       controller: dispatcherProvider.emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: "Email",
                         hintStyle: TextStyle(fontSize: 12),
@@ -198,12 +198,12 @@ class _DispatcherPageState extends State<DispatcherPage> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                     decoration: BoxDecoration(
-                        color: Color(0xffE4E4E4),
+                        color: const Color(0xffE4E4E4),
                         borderRadius: BorderRadius.circular(15)),
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: TextFormField(
                       controller: dispatcherProvider.passwordController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: "Password",
                         hintStyle: TextStyle(fontSize: 12),
@@ -216,12 +216,12 @@ class _DispatcherPageState extends State<DispatcherPage> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                     decoration: BoxDecoration(
-                        color: Color(0xffE4E4E4),
+                        color: const Color(0xffE4E4E4),
                         borderRadius: BorderRadius.circular(15)),
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: TextFormField(
                       controller: dispatcherProvider.phoneController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: "Phone",
                         hintStyle: TextStyle(fontSize: 12),
@@ -234,12 +234,12 @@ class _DispatcherPageState extends State<DispatcherPage> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                     decoration: BoxDecoration(
-                        color: Color(0xffE4E4E4),
+                        color: const Color(0xffE4E4E4),
                         borderRadius: BorderRadius.circular(15)),
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: TextFormField(
                       controller: dispatcherProvider.serverController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: "Server",
                         hintStyle: TextStyle(fontSize: 12),
@@ -287,7 +287,7 @@ class _DispatcherPageState extends State<DispatcherPage> {
                         alignment: Alignment.center,
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.15,
-                        child: Text(
+                        child: const Text(
                           'clear',
                           style: TextStyle(color: Colors.blue),
                         ),

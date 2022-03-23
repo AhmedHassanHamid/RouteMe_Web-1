@@ -20,7 +20,7 @@ class DriverDataSource extends DataGridSource {
   }
 
   List<DataGridRow> _drivers = [];
-  DriversProvider driverProvider;
+  DriverProvider driverProvider;
 
   @override
   List<DataGridRow> get rows => _drivers;
@@ -40,7 +40,9 @@ class DriverDataSource extends DataGridSource {
                     if (e.value['edit'])
                       FittedBox(
                           child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                driverProvider.enableEditMode(e.value['id']);
+                              },
                               icon: Icon(
                                 Icons.edit,
                               ))),

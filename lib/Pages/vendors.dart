@@ -132,91 +132,160 @@ class _VendorsState extends State<Vendors> {
             ),
             Container(
               decoration: BoxDecoration(
-                color: const Color(0xff00468B),
+                color: Color(0xff00468B),
                 borderRadius: BorderRadius.circular(40),
               ),
-              height: MediaQuery.of(context).size.height * 0.58,
+              height: vendorProvider.editMode
+                  ? MediaQuery.of(context).size.height * 0.85
+                  : MediaQuery.of(context).size.height * 0.8,
               width: MediaQuery.of(context).size.width * 0.34,
               padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 0.04,
+                vertical: MediaQuery.of(context).size.height * 0.02,
               ),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.043,
-                  ),
-                  const Text(
-                    "Add Vendors",
+                  Text(
+                    vendorProvider.editMode ? "Edit Vendor" : "Add Vendor",
                     style: TextStyle(fontSize: 30, color: Color(0xffffffff)),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.041,
+                    height: MediaQuery.of(context).size.height * 0.05,
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                     decoration: BoxDecoration(
-                        color: const Color(0xffE4E4E4),
+                        color: Color(0xffE4E4E4),
                         borderRadius: BorderRadius.circular(15)),
-                    padding: const EdgeInsets.all(8),
+                    padding: EdgeInsets.all(8),
                     child: TextFormField(
-                      decoration: const InputDecoration(
+                      controller: vendorProvider.nameController,
+                      decoration: InputDecoration(
                         border: InputBorder.none,
-                        label: Text(
-                          'Name',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.03,
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    decoration: BoxDecoration(
-                        color: const Color(0xffE4E4E4),
-                        borderRadius: BorderRadius.circular(15)),
-                    padding: const EdgeInsets.all(8),
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        label: Text(
-                          'Email',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.03,
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    decoration: BoxDecoration(
-                        color: const Color(0xffE4E4E4),
-                        borderRadius: BorderRadius.circular(15)),
-                    padding: const EdgeInsets.all(8),
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        label: Text(
-                          'Phone',
-                          style: TextStyle(fontSize: 12),
-                        ),
+                        hintText: "Name",
+                        hintStyle: TextStyle(fontSize: 12),
                       ),
                     ),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.04,
                   ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: EdgeInsets.all(8),
+                    child: TextFormField(
+                      controller: vendorProvider.emailController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Email",
+                        hintStyle: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: EdgeInsets.all(8),
+                    child: TextFormField(
+                      controller: vendorProvider.passwordController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Password",
+                        hintStyle: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: EdgeInsets.all(8),
+                    child: TextFormField(
+                      controller: vendorProvider.phoneController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Phone",
+                        hintStyle: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: [
+                        Flexible(
+                          flex: 4,
+                          child: Container(
+                              height: MediaQuery.of(context).size.height * 0.05,
+                              decoration: BoxDecoration(
+                                color: Color(0xffE4E4E4),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              padding: EdgeInsets.all(8),
+                              child: Text(vendorProvider.file != null
+                                  ? vendorProvider.file!.path.split('/').last
+                                  : 'selectImage')),
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: IconButton(
+                            onPressed: () => vendorProvider.uploadFile(),
+                            icon: Icon(Icons.attach_file),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: EdgeInsets.all(8),
+                    child: TextFormField(
+                      controller: vendorProvider.serverController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Server",
+                        hintStyle: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                  ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (vendorProvider.editMode) {
+                        vendorProvider.editUser();
+                      } else {
+                        vendorProvider.addUser();
+                      }
+                    },
                     child: Container(
                       alignment: Alignment.center,
                       height: MediaQuery.of(context).size.height * 0.06,
                       width: MediaQuery.of(context).size.width * 0.15,
                       child: Text(
-                        'Save',
+                        vendorProvider.editMode ? 'edit' : 'Save',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),
@@ -228,7 +297,33 @@ class _VendorsState extends State<Vendors> {
                         ),
                         backgroundColor:
                             MaterialStateProperty.all(Colors.white)),
-                  )
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  if (vendorProvider.editMode)
+                    ElevatedButton(
+                      onPressed: () {
+                        vendorProvider.disableEditMode();
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        child: Text(
+                          'clear',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                          ),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white)),
+                    ),
                 ],
               ),
             )

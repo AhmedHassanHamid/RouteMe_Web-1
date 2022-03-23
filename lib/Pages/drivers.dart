@@ -16,13 +16,13 @@ class _DriversState extends State<Drivers> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final driverProvider = Provider.of<DriversProvider>(context);
+    final driverProvider = Provider.of<DriverProvider>(context);
     driverProvider.getDriversData();
   }
 
   @override
   Widget build(BuildContext context) {
-    final driverProvider = Provider.of<DriversProvider>(context);
+    final driverProvider = Provider.of<DriverProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -64,67 +64,74 @@ class _DriversState extends State<Drivers> {
                     height: MediaQuery.of(context).size.height * 0.041,
                   ),
                   if (driverProvider.showGrid)
-                    SfDataGrid(
-                      source: driverProvider.driverDataSource!,
-                      columnWidthMode: ColumnWidthMode.fill,
-                      columns: <GridColumn>[
-                        GridColumn(
-                            columnName: 'status',
-                            label: Container(
-                                padding: const EdgeInsets.all(16.0),
-                                alignment: Alignment.center,
-                                child: const FittedBox(
-                                  child: Text(
-                                    'Status',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ))),
-                        GridColumn(
-                            columnName: 'email',
-                            label: Container(
-                                padding: const EdgeInsets.all(8.0),
-                                alignment: Alignment.center,
-                                child: const FittedBox(
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      child: SfDataGrid(
+                        source: driverProvider.driverDataSource!,
+                        columnWidthMode: ColumnWidthMode.fill,
+                        shrinkWrapRows: true,
+                        isScrollbarAlwaysShown: true,
+                        verticalScrollPhysics:
+                            const AlwaysScrollableScrollPhysics(),
+                        columns: <GridColumn>[
+                          GridColumn(
+                              columnName: 'status',
+                              label: Container(
+                                  padding: const EdgeInsets.all(16.0),
+                                  alignment: Alignment.center,
+                                  child: const FittedBox(
                                     child: Text(
-                                  'Email',
-                                  style: TextStyle(color: Colors.white),
-                                )))),
-                        GridColumn(
-                            columnName: 'name',
-                            label: Container(
-                                padding: const EdgeInsets.all(8.0),
-                                alignment: Alignment.center,
-                                child: const FittedBox(
-                                  child: Text(
-                                    'Name',
-                                    overflow: TextOverflow.ellipsis,
+                                      'Status',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ))),
+                          GridColumn(
+                              columnName: 'email',
+                              label: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  alignment: Alignment.center,
+                                  child: const FittedBox(
+                                      child: Text(
+                                    'Email',
                                     style: TextStyle(color: Colors.white),
-                                  ),
-                                ))),
-                        GridColumn(
-                            columnName: 'phone',
-                            label: Container(
-                                padding: const EdgeInsets.all(8.0),
-                                alignment: Alignment.center,
-                                child: const FittedBox(
-                                  child: Text(
-                                    'Phone',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ))),
-                        GridColumn(
-                            columnName: 'action',
-                            label: Container(
-                                padding: const EdgeInsets.all(8.0),
-                                alignment: Alignment.center,
-                                child: const FittedBox(
-                                  child: Text(
-                                    'Action',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ))),
-                      ],
-                    )
+                                  )))),
+                          GridColumn(
+                              columnName: 'name',
+                              label: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  alignment: Alignment.center,
+                                  child: const FittedBox(
+                                    child: Text(
+                                      'Name',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ))),
+                          GridColumn(
+                              columnName: 'phone',
+                              label: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  alignment: Alignment.center,
+                                  child: const FittedBox(
+                                    child: Text(
+                                      'Phone',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ))),
+                          GridColumn(
+                              columnName: 'action',
+                              label: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  alignment: Alignment.center,
+                                  child: const FittedBox(
+                                    child: Text(
+                                      'Action',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ))),
+                        ],
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -136,10 +143,13 @@ class _DriversState extends State<Drivers> {
                 color: const Color(0xff00468B),
                 borderRadius: BorderRadius.circular(40),
               ),
-              height: MediaQuery.of(context).size.height * 0.58,
+              height: driverProvider.editMode
+                  ? MediaQuery.of(context).size.height * 0.83
+                  : MediaQuery.of(context).size.height * 0.8,
               width: MediaQuery.of(context).size.width * 0.34,
               padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 0.04,
+                vertical: MediaQuery.of(context).size.height * 0.02,
               ),
               child: Column(
                 children: [
@@ -160,65 +170,107 @@ class _DriversState extends State<Drivers> {
                         borderRadius: BorderRadius.circular(15)),
                     padding: const EdgeInsets.all(8),
                     child: TextFormField(
+                      controller: driverProvider.nameController,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        label: Text(
-                          'Name',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.03,
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    decoration: BoxDecoration(
-                        color: const Color(0xffE4E4E4),
-                        borderRadius: BorderRadius.circular(15)),
-                    padding: const EdgeInsets.all(8),
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        label: Text(
-                          'Email',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.03,
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    decoration: BoxDecoration(
-                        color: const Color(0xffE4E4E4),
-                        borderRadius: BorderRadius.circular(15)),
-                    padding: const EdgeInsets.all(8),
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        label: Text(
-                          'Phone',
-                          style: TextStyle(fontSize: 12),
-                        ),
+                        hintText: "Name",
+                        hintStyle: TextStyle(fontSize: 12),
                       ),
                     ),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.04,
                   ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                      controller: driverProvider.emailController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Email",
+                        hintStyle: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                      controller: driverProvider.passwordController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Password",
+                        hintStyle: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                      controller: driverProvider.phoneController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Phone",
+                        hintStyle: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                      controller: driverProvider.serverController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Server",
+                        hintStyle: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                  ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (driverProvider.editMode) {
+                        driverProvider.editUser();
+                      } else {
+                        driverProvider.addUser();
+                      }
+                    },
                     child: Container(
                       alignment: Alignment.center,
                       height: MediaQuery.of(context).size.height * 0.06,
                       width: MediaQuery.of(context).size.width * 0.15,
                       child: Text(
-                        'Save',
-                        style: TextStyle(color: Colors.blue),
+                        driverProvider.editMode ? 'edit' : 'Save',
+                        style: const TextStyle(color: Colors.blue),
                       ),
                     ),
                     style: ButtonStyle(
@@ -229,7 +281,33 @@ class _DriversState extends State<Drivers> {
                         ),
                         backgroundColor:
                             MaterialStateProperty.all(Colors.white)),
-                  )
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  if (driverProvider.editMode)
+                    ElevatedButton(
+                      onPressed: () {
+                        driverProvider.disableEditMode();
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        child: const Text(
+                          'clear',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                          ),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white)),
+                    ),
                 ],
               ),
             )

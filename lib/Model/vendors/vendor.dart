@@ -4,10 +4,12 @@ class VendorsModel {
   final String email;
   final String name;
   final String phone;
+  final String server;
+  final String password;
   final Map<String, dynamic> actions;
 
   VendorsModel(
-      this.id, this.status, this.email, this.name, this.phone, this.actions);
+      this.id, this.status, this.email, this.name, this.phone, this.actions,this.password, this.server);
 
   factory VendorsModel.fromJson(json) {
     return VendorsModel(
@@ -17,6 +19,8 @@ class VendorsModel {
       json['brandName'] ?? '',
       json['phone'] ?? '',
       {"edit": true, "delete": true, "id": json["id"].toString()},
-    );
+      json['password'] ?? '',
+      json['server'] ?? '');
+    
   }
 }

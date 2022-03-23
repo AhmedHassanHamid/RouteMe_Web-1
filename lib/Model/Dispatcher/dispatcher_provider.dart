@@ -14,7 +14,6 @@ class Dispatcherprovider with ChangeNotifier {
   bool showGrid = false, editMode = false;
 
   DispatcherModel? selectedDispatcher;
-
   final TextEditingController _nameController = TextEditingController();
   TextEditingController get nameController => _nameController;
 

@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           lazy: false,
         ),
         ChangeNotifierProvider(
-          create: (context) => DriversProvider(),
+          create: (context) => DriverProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider(
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: DispatcherPage(),
+        home: Drivers(),
       ),
     );
   }

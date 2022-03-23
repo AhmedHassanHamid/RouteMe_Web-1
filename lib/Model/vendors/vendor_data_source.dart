@@ -11,7 +11,7 @@ class VendorDataSource extends DataGridSource {
     _vendors = vendors
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(columnName: 'status', value: e.status),
-              DataGridCell<String>(columnName: 'email', value: e.name),
+              DataGridCell<String>(columnName: 'email', value: e.email),
               DataGridCell<String>(columnName: 'name', value: e.name),
               DataGridCell<String>(columnName: 'phone', value: e.phone),
               DataGridCell<Map<String, dynamic>>(
@@ -41,7 +41,10 @@ class VendorDataSource extends DataGridSource {
                     if (e.value['edit'])
                       FittedBox(
                           child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                 vendorprovider                           
+                                  .enableEditMode(e.value['id']);  
+                              },
                               icon: const Icon(
                                 Icons.edit,
                               ))),
