@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:web/Model/Dispatcher/dispatcher.dart';
-import 'package:web/Model/Dispatcher/dispatcher_data_source.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:web/Model/Dispatcher/dispatcher_provider.dart';
 
 class DispatcherPage extends StatefulWidget {
   const DispatcherPage({Key? key}) : super(key: key);
@@ -11,77 +11,74 @@ class DispatcherPage extends StatefulWidget {
 }
 
 class _DispatcherPageState extends State<DispatcherPage> {
-  List<DispatcherModel> dispatchers = <DispatcherModel>[];
-  late DispatcherDataSource dispatcherDataSource;
-
   @override
-  void initState() {
-    super.initState();
-    dispatchers = getDispatcherData();
-    dispatcherDataSource =
-        DispatcherDataSource(dispatchers: dispatchers, context: context);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final dispatcherProvider = Provider.of<Dispatcherprovider>(context);
+    dispatcherProvider.getDispatcherData();
   }
 
   @override
   Widget build(BuildContext context) {
+    final dispatcherProvider = Provider.of<Dispatcherprovider>(context);
+
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Reebook'),
-          centerTitle: true,
-          backgroundColor: const Color(0xff00468B),
-          leading: InkWell(
-            onTap: () {
-              // ignore: avoid_print
-              print("....");
-            },
-            child: const Icon(Icons.settings),
-          ),
+      appBar: AppBar(
+        title: const Text('Reebook'),
+        centerTitle: true,
+        backgroundColor: const Color(0xff00468B),
+        leading: InkWell(
+          onTap: () {
+            print("....");
+          },
+          child: const Icon(Icons.settings),
         ),
-        body: Container(
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xff00468B),
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.02,
-                    vertical: MediaQuery.of(context).size.height * 0.02),
-                width: MediaQuery.of(context).size.width * 0.51,
-                child: Wrap(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.043,
+      ),
+      body: Container(
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: const Color(0xff00468B),
+                borderRadius: BorderRadius.circular(40),
+              ),
+              padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.02,
+                  vertical: MediaQuery.of(context).size.height * 0.02),
+              width: MediaQuery.of(context).size.width * 0.51,
+              child: Wrap(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.043,
+                  ),
+                  const Center(
+                    child: Text(
+                      "Dispatchers",
+                      style: TextStyle(fontSize: 30, color: Color(0xffffffff)),
                     ),
-                    Center(
-                      child: Text(
-                        "Dispatchers",
-                        style:
-                            TextStyle(fontSize: 30, color: Color(0xffffffff)),
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.041,
-                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.041,
+                  ),
+                  if (dispatcherProvider.showGrid)
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.5,
                       child: SfDataGrid(
-                        source: dispatcherDataSource,
+                        source: dispatcherProvider.dispatcherDataSource!,
                         columnWidthMode: ColumnWidthMode.fill,
                         shrinkWrapRows: true,
                         isScrollbarAlwaysShown: true,
                         verticalScrollPhysics:
-                            const AlwaysScrollableScrollPhysics(),
+                        const AlwaysScrollableScrollPhysics(),
                         columns: <GridColumn>[
                           GridColumn(
                               columnName: 'status',
                               label: Container(
-                                  padding: EdgeInsets.all(16.0),
+                                  padding: const EdgeInsets.all(16.0),
                                   alignment: Alignment.center,
-                                  child: FittedBox(
+                                  child: const FittedBox(
                                     child: Text(
                                       'Status',
                                       style: TextStyle(color: Colors.white),
@@ -90,9 +87,9 @@ class _DispatcherPageState extends State<DispatcherPage> {
                           GridColumn(
                               columnName: 'email',
                               label: Container(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   alignment: Alignment.center,
-                                  child: FittedBox(
+                                  child: const FittedBox(
                                       child: Text(
                                     'Email',
                                     style: TextStyle(color: Colors.white),
@@ -100,9 +97,9 @@ class _DispatcherPageState extends State<DispatcherPage> {
                           GridColumn(
                               columnName: 'name',
                               label: Container(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   alignment: Alignment.center,
-                                  child: FittedBox(
+                                  child: const FittedBox(
                                     child: Text(
                                       'Name',
                                       overflow: TextOverflow.ellipsis,
@@ -112,9 +109,9 @@ class _DispatcherPageState extends State<DispatcherPage> {
                           GridColumn(
                               columnName: 'phone',
                               label: Container(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   alignment: Alignment.center,
-                                  child: FittedBox(
+                                  child: const FittedBox(
                                     child: Text(
                                       'Phone',
                                       style: TextStyle(color: Colors.white),
@@ -123,9 +120,9 @@ class _DispatcherPageState extends State<DispatcherPage> {
                           GridColumn(
                               columnName: 'action',
                               label: Container(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   alignment: Alignment.center,
-                                  child: FittedBox(
+                                  child: const FittedBox(
                                     child: Text(
                                       'Action',
                                       style: TextStyle(color: Colors.white),
@@ -134,99 +131,164 @@ class _DispatcherPageState extends State<DispatcherPage> {
                         ],
                       ),
                     ),
-                  ],
-                ),
+                ],
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.06,
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.06,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: const Color(0xff00468B),
+                borderRadius: BorderRadius.circular(40),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xff00468B),
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                height: MediaQuery.of(context).size.height * 0.58,
-                width: MediaQuery.of(context).size.width * 0.34,
-                padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.04,
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.043,
-                    ),
-                    Text(
-                      "Add Dispatchers",
-                      style: TextStyle(fontSize: 30, color: Color(0xffffffff)),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.041,
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      decoration: BoxDecoration(
-                          color: Color(0xffE4E4E4),
-                          borderRadius: BorderRadius.circular(15)),
-                      padding: EdgeInsets.all(8),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          label: Text(
-                            'Name',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ),
+              height: dispatcherProvider.editMode
+                  ? MediaQuery.of(context).size.height * 0.75
+                  : MediaQuery.of(context).size.height * 0.7,
+              width: MediaQuery.of(context).size.width * 0.34,
+              padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.04,
+                vertical: MediaQuery.of(context).size.height * 0.02,
+              ),
+              child: Column(
+                children: [
+                  const Text(
+                    "Add Dispatchers",
+                    style: TextStyle(fontSize: 30, color: Color(0xffffffff)),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                      controller: dispatcherProvider.nameController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Name",
+                        hintStyle: TextStyle(fontSize: 12),
                       ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      decoration: BoxDecoration(
-                          color: Color(0xffE4E4E4),
-                          borderRadius: BorderRadius.circular(15)),
-                      padding: EdgeInsets.all(8),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          label: Text(
-                            'Email',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                      controller: dispatcherProvider.emailController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Email",
+                        hintStyle: TextStyle(fontSize: 12),
                       ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      decoration: BoxDecoration(
-                          color: Color(0xffE4E4E4),
-                          borderRadius: BorderRadius.circular(15)),
-                      padding: EdgeInsets.all(8),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          label: Text(
-                            'Phone',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                      controller: dispatcherProvider.passwordController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Password",
+                        hintStyle: TextStyle(fontSize: 12),
                       ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                      controller: dispatcherProvider.phoneController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Phone",
+                        hintStyle: TextStyle(fontSize: 12),
+                      ),
                     ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffE4E4E4),
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                      controller: dispatcherProvider.serverController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Server",
+                        hintStyle: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (dispatcherProvider.editMode) {
+                        dispatcherProvider.editUser();
+                      } else {
+                        dispatcherProvider.addUser();
+                      }
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      width: MediaQuery.of(context).size.width * 0.15,
+                      child: Text(
+                        dispatcherProvider.editMode ? 'edit' : 'Save',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.white)),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  if (dispatcherProvider.editMode)
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        dispatcherProvider.disableEditMode();
+                      },
                       child: Container(
                         alignment: Alignment.center,
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.15,
-                        child: Text(
-                          'Save',
+                        child: const Text(
+                          'clear',
                           style: TextStyle(color: Colors.blue),
                         ),
                       ),
@@ -238,53 +300,13 @@ class _DispatcherPageState extends State<DispatcherPage> {
                           ),
                           backgroundColor:
                               MaterialStateProperty.all(Colors.white)),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ));
+                    ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
-}
-
-List<DispatcherModel> getDispatcherData() {
-  return [
-    DispatcherModel("online", 'marian adly1', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian adly1', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian adly1', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-    DispatcherModel("online", 'marian.adly', 'marian', "0122222222222",
-        {"edit": true, "delete": true}),
-  ];
 }

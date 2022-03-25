@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:web/Model/Dispatcher/dispatcher.dart';
-import 'package:web/Model/Dispatcher/dispatcher_provider.dart';
-import 'package:web/Pages/drivers.dart';
+import 'package:web/Model/Drivers/driver.dart';
+import 'package:web/Model/vendors/vendor.dart';
+import 'package:web/Model/vendors/vendor_provider.dart';
+import 'package:web/Pages/vendors.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-class DispatcherDataSource extends DataGridSource {
-  DispatcherDataSource(
-      {required List<DispatcherModel> dispatchers,
-      required this.dispatcherProvider}) {
-    _dispatchers = dispatchers
+class VendorDataSource extends DataGridSource {
+  VendorDataSource(
+      {required List<VendorsModel> vendors, required this.vendorprovider}) {
+    _vendors = vendors
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(columnName: 'status', value: e.status),
               DataGridCell<String>(columnName: 'email', value: e.email),
@@ -18,21 +18,20 @@ class DispatcherDataSource extends DataGridSource {
                   columnName: 'actions', value: e.actions),
             ]))
         .toList();
-    
   }
 
-  List<DataGridRow> _dispatchers = [];
-  Dispatcherprovider dispatcherProvider;
-  
-  @override
-  List<DataGridRow> get rows => _dispatchers;
+  List<DataGridRow> _vendors = [];
+  Vendorprovider vendorprovider;
 
   @override
-  DataGridRowAdapter buildRow(DataGridRow row) {
+  List<DataGridRow> get rows => _vendors;
+
+  @override
+  DataGridRowAdapter? buildRow(DataGridRow row) {
     return DataGridRowAdapter(
         cells: row.getCells().map<Widget>((e) {
       return Container(
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(color: Colors.white),
         alignment: Alignment.center,
         padding: const EdgeInsets.all(8.0),
         child: e.columnName == "actions"
@@ -43,32 +42,30 @@ class DispatcherDataSource extends DataGridSource {
                       FittedBox(
                           child: IconButton(
                               onPressed: () {
-                                dispatcherProvider
-                                    .enableEditMode(e.value['id']);
+                                 vendorprovider                           
+                                  .enableEditMode(e.value['id']);  
                               },
-                              icon: Icon(Icons.edit))),
+                              icon: const Icon(
+                                Icons.edit,
+                              ))),
                     if (e.value['delete'])
                       FittedBox(
                           child: IconButton(
                               onPressed: () {
-                                print("Start delete");
-                                dispatcherProvider.deleteUser(e.value['id']);
+                                vendorprovider.deleteUser(e.value['id']);
                               },
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.delete,
                                 color: Color(0xffB50000),
                               ))),
                   ],
                 ),
               )
-            : FittedBox(
-                child: Text(
-                  e.value.toString(),
-                  style: TextStyle(
-                      color: e.columnName == "status"
-                          ? Colors.green
-                          : Colors.black),
-                ),
+            : Text(
+                e.value.toString(),
+                style: TextStyle(
+                    color:
+                        e.columnName == "status" ? Colors.green : Colors.black),
               ),
       );
     }).toList());

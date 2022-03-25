@@ -36,6 +36,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   sizer: ^2.0.15
   syncfusion_flutter_datagrid: ^19.4.54
+  http: ^0.13.4
+  provider: ^6.0.2
+  fluttertoast: ^8.0.9
+  image_picker: ^0.8.4+11
 
 dev_dependencies:
   flutter_test:
