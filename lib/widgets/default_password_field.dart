@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:web/styles/colors.dart';
 
 class DefaultPasswordField extends StatelessWidget {
@@ -7,26 +6,30 @@ class DefaultPasswordField extends StatelessWidget {
   String hintText;
   VoidCallback onTap;
   bool password;
+  double width;
+  double height;
 
   DefaultPasswordField({
     required this.controller,
     required this.hintText,
     required this.onTap,
     required this.password,
+    required this.width,
+    required this.height,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        top: 1.h,
+      padding: const EdgeInsets.only(
+        top: 10,
       ),
       child: Container(
-        width: 90.w,
-        height: 10.h,
-        margin: EdgeInsets.symmetric(
-          vertical: 0.8.h,
+        width: width,
+        height: height,
+        margin: const EdgeInsets.symmetric(
+          vertical: 8,
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(
@@ -35,9 +38,9 @@ class DefaultPasswordField extends StatelessWidget {
         ),
         child: TextFormField(
           controller: controller,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
-            fontSize: 15.sp,
+            fontSize: 20,
           ),
           cursorColor: AppColors.blue,
           maxLines: 1,
@@ -53,8 +56,8 @@ class DefaultPasswordField extends StatelessWidget {
               ),
             ),
             alignLabelWithHint: true,
-            hintStyle: TextStyle(
-              fontSize: 12.sp,
+            hintStyle: const TextStyle(
+              fontSize: 20,
             ),
             filled: true,
             fillColor: AppColors.lightGray,

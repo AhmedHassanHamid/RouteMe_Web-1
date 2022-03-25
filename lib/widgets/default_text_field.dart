@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:web/styles/colors.dart';
 
 class DefaultTextField extends StatelessWidget {
   TextEditingController controller;
   String hintText;
+  double width;
+  double height;
 
   DefaultTextField({
     required this.controller,
     required this.hintText,
+    required this.width,
+    required this.height,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        top: 1.h,
+      padding: const EdgeInsets.only(
+        top: 10,
       ),
       child: Container(
-        width: 90.w,
-        height: 10.h,
-        margin: EdgeInsets.symmetric(
-          vertical: 0.8.h,
+        width: width,
+        height: height,
+        margin: const EdgeInsets.symmetric(
+          vertical: 8,
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(
@@ -31,17 +34,17 @@ class DefaultTextField extends StatelessWidget {
         ),
         child: TextFormField(
           controller: controller,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
-            fontSize: 15.sp,
+            fontSize: 20,
           ),
           cursorColor: AppColors.blue,
           maxLines: 1,
           decoration: InputDecoration(
             hintText: hintText,
             alignLabelWithHint: true,
-            hintStyle: TextStyle(
-              fontSize: 12.sp,
+            hintStyle: const TextStyle(
+              fontSize: 20,
             ),
             filled: true,
             fillColor: AppColors.lightGray,

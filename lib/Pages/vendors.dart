@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import 'package:web/Model/vendors/vendor.dart';
-import 'package:web/Model/vendors/vendor_data_source.dart';
 import 'package:web/Model/vendors/vendor_provider.dart';
 
 class Vendors extends StatefulWidget {
