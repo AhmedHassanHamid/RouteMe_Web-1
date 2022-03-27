@@ -4,6 +4,7 @@ import 'package:web/Model/Dispatcher/dispatcher_provider.dart';
 import 'package:web/Model/Orders/order_provider.dart';
 import 'package:web/Model/vendors/vendor_provider.dart';
 import 'package:web/Pages/login.dart';
+import 'package:web/Pages/tasks.dart';
 import 'Model/Drivers/driver_provider.dart';
 
 void main() {
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const LoginScreen(),
+        home: const Tasks(),
       ),
     );
   }
