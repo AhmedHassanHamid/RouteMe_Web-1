@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:web/presentation/screens/login.dart';
+import 'package:flutter_translate/flutter_translate.dart';
+import 'package:sizer/sizer.dart';
 import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/widgets/default_app_button.dart';
 import 'package:web/presentation/widgets/default_password_field.dart';
 import 'package:web/presentation/widgets/default_text_field.dart';
+import 'package:web/presentation/screens/loading_dialog.dart';
+import 'package:web/presentation/widgets/toast.dart';
 
 class RegisterScreen extends StatefulWidget {
-  RegisterScreen({Key? key}) : super(key: key);
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -28,22 +31,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    fToast.init(context);
     return Scaffold(
       backgroundColor: AppColors.darkPurple,
       body: SingleChildScrollView(
         child: Column(
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              textDirection: TextDirection.ltr,
               children: const [
                 Image(
                   image: AssetImage(
-                    "assets/Mask_Group_6.png",
+                    "assets/images/Mask_Group_6.png",
                   ),
                 ),
                 Image(
                   image: AssetImage(
-                    "assets/Mask_Group_7.png",
+                    "assets/images/Mask_Group_7.png",
                   ),
                 ),
               ],
@@ -52,54 +58,75 @@ class _RegisterScreenState extends State<RegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
-                      left: 40, right: 40, top: 10, bottom: 10),
-                  width: 500,
+                  padding: const EdgeInsets.all(20),
+                  width: 400,
                   height: 500,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(10),
                     color: AppColors.white,
                   ),
                   child: Column(
                     children: [
                       DefaultTextField(
                         controller: server,
-                        hintText: 'Server Name',
-                        width: 400,
-                        height: 50,
+                        hintText: translate("server"),
                       ),
                       DefaultTextField(
                         controller: company,
-                        hintText: 'Company Name',
-                        width: 400,
-                        height: 50,
+                        hintText: translate("company"),
                       ),
                       DefaultTextField(
                         controller: email,
-                        hintText: 'E-Mail',
-                        width: 400,
-                        height: 50,
+                        hintText: translate("email"),
                       ),
                       DefaultTextField(
                         controller: phone,
-                        hintText: 'Phone Number',
-                        width: 400,
-                        height: 50,
+                        hintText: translate("hintPhone"),
                       ),
                       DefaultPasswordField(
-                        controller: password,
-                        hintText: 'Password',
-                        onTap: () => showPassword(),
                         password: passwordVisible,
+                        controller: password,
+                        icon: IconButton(
+                          icon: Icon(
+                            passwordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          ),
+                          onPressed: showPassword,
+                        ),
+                        hintText: translate("password"),
+                        submit: (value) {},
+                      ),
+                      const SizedBox(
+                        height: 15,
                       ),
                       DefaultAppButton(
-                        text: 'Register',
-                        backGround: AppColors.darkPurple,
-                        fontSize: 25,
-                        height: 60,
-                        onTap: () {},
-                        width: 300,
+                        text: translate("register"),
+                        backGround: AppColors.purple,
+                        fontSize: 20,
+                        height: 7.h,
+                        width: 25.w,
                         textColor: AppColors.white,
+                        onTap: () {
+                          server.text == ''?
+                          showToast(translate('serverValidate')):
+                          company.text == ''?
+                          showToast(translate('companyValidate')):
+                          email.text == ''?
+                          showToast(translate('emailValidate')):
+                          phone.text == ''?
+                          showToast(translate('phoneValidate')):
+                          password.text == ''?
+                          showToast(translate('passwordValidate')):
+                          {
+                            showDialog(
+                              context: context,
+                              builder: (_) {
+                                return const LoadingDialog();
+                              },
+                            )
+                          };
+                        },
                       ),
                       const SizedBox(
                         height: 10,
@@ -107,21 +134,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Have An Account? "),
+                          Text(translate("haveAccount")),
                           InkWell(
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(
+                            child: Text(
+                              translate("login"),
+                              style: const TextStyle(
                                 color: AppColors.purple,
                               ),
                             ),
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const LoginScreen(),
-                                ),
-                              );
+                              Navigator.of(context).pushNamed('/login');
                             },
                           )
                         ],
@@ -131,8 +153,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const Image(
                   image: AssetImage(
-                    "assets/Group_10.png",
+                    "assets/images/Group_10.png",
                   ),
+                  height: 250,
                 ),
               ],
             ),

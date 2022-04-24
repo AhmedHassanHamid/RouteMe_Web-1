@@ -15,7 +15,7 @@ class LanguageDialog extends StatelessWidget {
       body: Center(
         child: Container(
           height: 30.h,
-          width: 65.w,
+          width: 15.w,
           decoration: BoxDecoration(
             border: Border.all(
               color: AppColors.black,

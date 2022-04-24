@@ -34,7 +34,7 @@ class DefaultSearchField extends StatelessWidget {
           controller: controller,
           style: const TextStyle(
             color: AppColors.black,
-            fontSize: 25,
+            fontSize: 12,
           ),
           cursorColor: AppColors.purple,
           maxLines: 1,
@@ -48,11 +48,12 @@ class DefaultSearchField extends StatelessWidget {
                 icon: const Icon(
                   Icons.search,
                 ),
+                iconSize: 18,
                 onPressed: onTap,
               ),
             ),
             hintStyle: const TextStyle(
-              fontSize: 15,
+              fontSize: 12,
             ),
             filled: true,
             fillColor: AppColors.lightGray,

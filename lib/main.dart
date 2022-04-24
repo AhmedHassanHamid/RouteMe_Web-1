@@ -9,7 +9,14 @@ import 'package:sizer/sizer.dart';
 import 'package:web/business_logic/app_cubit/app_cubit.dart';
 import 'package:web/business_logic/app_cubit/app_state.dart';
 import 'package:web/business_logic/bloc_observer.dart';
+import 'package:web/business_logic/dispatchers_cubit/dispatchers_cubit.dart';
+import 'package:web/business_logic/drivers_cubit/drivers_cubit.dart';
+import 'package:web/business_logic/language_cubit/language_cubit.dart';
+import 'package:web/business_logic/login_cubit/login_cubit.dart';
+import 'package:web/business_logic/orders_cubit/orders_cubit.dart';
+import 'package:web/business_logic/vendor_cubit/vendors_cubit.dart';
 import 'package:web/data/remote/dio_helper.dart';
+import 'business_logic/delete_user_cubit/delete_user_cubit.dart';
 import 'data/local/cache_helper.dart';
 import 'presentation/router/app_router.dart';
 import 'presentation/styles/colors.dart';
@@ -72,6 +79,27 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(
           create: ((context) => AppCubit()..permission),
+        ),
+        BlocProvider(
+          create: ((context) => LoginCubit()),
+        ),
+        BlocProvider(
+          create: ((context) => LanguageCubit()),
+        ),
+        BlocProvider(
+          create: ((context) => DeleteUserCubit()),
+        ),
+        BlocProvider(
+          create: ((context) => OrderCubit()..myOrders),
+        ),
+        BlocProvider(
+          create: ((context) => DriversCubit()..myDrivers),
+        ),
+        BlocProvider(
+          create: ((context) => DispatchersCubit()..myDispatchers),
+        ),
+        BlocProvider(
+          create: ((context) => VendorsCubit()..myVendors),
         ),
       ],
       child: BlocConsumer<AppCubit, AppStates>(

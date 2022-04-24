@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/widgets/default_app_button.dart';
 import 'package:web/presentation/widgets/default_text_field.dart';
 
-class VerifyScreen extends StatefulWidget {
-  const VerifyScreen({Key? key}) : super(key: key);
+class VerifyScreen extends StatelessWidget {
+  VerifyScreen({Key? key}) : super(key: key);
 
-  @override
-  _VerifyScreenState createState() => _VerifyScreenState();
-}
-
-class _VerifyScreenState extends State<VerifyScreen> {
-  TextEditingController code = TextEditingController();
-
+  final TextEditingController code = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +18,15 @@ class _VerifyScreenState extends State<VerifyScreen> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Image(
-                  image: AssetImage(
-                    "assets/Mask_Group_6.png",
-                  ),
+              textDirection: TextDirection.ltr,
+              children: [
+                Image.asset(
+                  'assets/images/Mask_Group_6.png',
+                  height: 200,
                 ),
-                Image(
-                  image: AssetImage(
-                    "assets/Mask_Group_7.png",
-                  ),
+                Image.asset(
+                  'assets/images/Mask_Group_7.png',
+                  height: 200,
                 ),
               ],
             ),
@@ -40,18 +34,18 @@ class _VerifyScreenState extends State<VerifyScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(40),
-                  width: 500,
-                  height: 350,
+                  padding: const EdgeInsets.all(20),
+                  width: 400,
+                  height: 300,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(10),
                     color: AppColors.white,
                   ),
                   child: Column(
                     children: [
-                      const Text(
-                        "Please Enter the Verification Code that was Sent to you via",
-                        style: TextStyle(
+                      Text(
+                        translate('enterCode'),
+                        style: const TextStyle(
                           fontSize: 20,
                         ),
                       ),
@@ -73,20 +67,20 @@ class _VerifyScreenState extends State<VerifyScreen> {
                       ),
                       DefaultTextField(
                         controller: code,
-                        hintText: 'Verification Code',
-                        width: 400,
-                        height: 60,
+                        hintText: translate('code'),
+                        width: 250,
+                        height: 50,
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       DefaultAppButton(
-                        text: 'Reset',
+                        text: translate('verify'),
                         backGround: AppColors.darkPurple,
                         fontSize: 25,
                         height: 60,
                         onTap: () {},
-                        width: 300,
+                        width: 200,
                         textColor: AppColors.white,
                       ),
                     ],
@@ -94,8 +88,9 @@ class _VerifyScreenState extends State<VerifyScreen> {
                 ),
                 const Image(
                   image: AssetImage(
-                    "assets/Group_10.png",
+                    "assets/images/Group_10.png",
                   ),
+                  height: 250,
                 ),
               ],
             ),

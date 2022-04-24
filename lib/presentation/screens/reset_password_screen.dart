@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/widgets/default_app_button.dart';
 import 'package:web/presentation/widgets/default_password_field.dart';
@@ -37,16 +38,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              textDirection: TextDirection.ltr,
               children: const [
                 Image(
                   image: AssetImage(
-                    "assets/Mask_Group_6.png",
+                    "assets/images/Mask_Group_6.png",
                   ),
+                  height: 200,
                 ),
                 Image(
                   image: AssetImage(
-                    "assets/Mask_Group_7.png",
+                    "assets/images/Mask_Group_7.png",
                   ),
+                  height: 200,
                 ),
               ],
             ),
@@ -54,30 +58,30 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(40),
-                  width: 500,
-                  height: 350,
+                  padding: const EdgeInsets.all(20),
+                  width: 400,
+                  height: 300,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(10),
                     color: AppColors.white,
                   ),
                   child: Column(
                     children: [
-                      const Text(
-                        "Set Your New Password",
-                        style: TextStyle(
+                      Text(
+                        translate('resetPassword'),
+                        style: const TextStyle(
                           fontSize: 20,
                         ),
                       ),
                       DefaultPasswordField(
                         controller: password,
-                        hintText: 'Password',
+                        hintText: translate('password'),
                         onTap: () => showPassword(),
                         password: passwordVisible,
                       ),
                       DefaultPasswordField(
                         controller: confirm,
-                        hintText: 'Confirm Password',
+                        hintText: translate('passwordConf'),
                         onTap: () => showConfirm(),
                         password: confirmVisible,
                       ),
@@ -85,12 +89,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         height: 10,
                       ),
                       DefaultAppButton(
-                        text: 'Reset',
+                        text: translate('reset'),
                         backGround: AppColors.darkPurple,
-                        fontSize: 25,
-                        height: 60,
+                        fontSize: 20,
+                        height: 50,
                         onTap: () {},
-                        width: 300,
+                        width: 250,
                         textColor: AppColors.white,
                       ),
                     ],
@@ -98,8 +102,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
                 const Image(
                   image: AssetImage(
-                    "assets/Group_10.png",
+                    "assets/images/Group_10.png",
                   ),
+                  height: 250,
                 ),
               ],
             ),
