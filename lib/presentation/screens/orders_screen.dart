@@ -4,7 +4,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web/business_logic/orders_cubit/orders_cubit.dart';
 import 'package:web/data/models/order_model.dart';
-import 'package:web/presentation/screens/order_details_dialog.dart';
+import 'package:web/presentation/view/order_details_dialog.dart';
 import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/widgets/default_icon_button.dart';
 import 'package:web/presentation/widgets/default_search_field.dart';
@@ -219,9 +219,9 @@ class OrdersScreen extends StatelessWidget {
                                               width: double.infinity,
                                               height: 35,
                                               decoration: BoxDecoration(
-                                                color: data.state == 'Delivered'
+                                                color: data.state == 'delivered'
                                                     ? AppColors.green
-                                                    : data.state == 'Rejected'
+                                                    : data.state == 'rejected'
                                                         ? AppColors.red
                                                         : AppColors.orange,
                                                 borderRadius:
@@ -232,7 +232,7 @@ class OrdersScreen extends StatelessWidget {
                                                   padding:
                                                       const EdgeInsets.all(8.0),
                                                   child: Text(
-                                                    data.state,
+                                                    translate(data.state),
                                                     style: const TextStyle(
                                                         color: AppColors.white,
                                                         fontSize: 15),
@@ -243,7 +243,7 @@ class OrdersScreen extends StatelessWidget {
                                           ),
                                           DataCell(
                                             Text(
-                                              data.comment,
+                                              translate(data.comment),
                                             ),
                                           ),
                                           DataCell(

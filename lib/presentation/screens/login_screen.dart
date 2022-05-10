@@ -1,13 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:sizer/sizer.dart';
 import 'package:web/business_logic/login_cubit/login_cubit.dart';
-import 'package:web/constants/end_points.dart';
+import 'package:web/business_logic/verify_cubit/verify_cubit.dart';
 import 'package:web/presentation/styles/colors.dart';
+import 'package:web/presentation/view/email_dialog.dart';
 import 'package:web/presentation/widgets/default_app_button.dart';
 import 'package:web/presentation/widgets/default_password_field.dart';
 import 'package:web/presentation/widgets/default_text_field.dart';
-import 'package:web/presentation/screens/loading_dialog.dart';
+import 'package:web/presentation/view/loading_dialog.dart';
 import 'package:web/presentation/widgets/toast.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -60,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   padding: const EdgeInsets.all(20),
                   width: 400,
-                  height: 450,
+                  height: 400,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.white,
@@ -94,13 +97,50 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           TextButton(
                             onPressed: () {
-                              Navigator.of(context).pushNamed('/verify');
+                              Random random = Random();
+                              int code = random.nextInt(999999) + 100000;
+                              email.text == ''
+                                  ? showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return EmailDialog();
+                                },
+                              )
+                                  : {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) {
+                                    return const LoadingDialog();
+                                  },
+                                ),
+                                VerifyCubit.get(context).verifyCode(
+                                  email: email.text,
+                                  code: code.toString(),
+                                  afterSuccess: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      "/verify",
+                                      arguments: {
+                                        'email': email.text,
+                                        'code': code.toString(),
+                                        'type':
+                                        VerifyCubit.get(context)
+                                            .verifyResponse!
+                                            .type,
+                                        'userId':
+                                        VerifyCubit.get(context)
+                                            .verifyResponse!
+                                            .id,
+                                      },
+                                    );
+                                  },
+                                  afterFail: () =>
+                                      Navigator.pop(context),
+                                ),
+                              };
                             },
                             child: Text(
                               translate("forget"),
-                              style: const TextStyle(
-                                fontSize: 12,
-                              ),
                             ),
                           ),
                         ],
@@ -135,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               email: email.text,
                               password: password.text,
                               afterSuccess: (){
-
+                                Navigator.pushNamed(context, "/drivers");
                               },
                               afterFail: (){
                                 Navigator.pop(context);

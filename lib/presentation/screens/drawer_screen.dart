@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:web/presentation/styles/colors.dart';
-import 'package:web/presentation/screens/language_dialog.dart';
+import 'package:web/presentation/view/language_dialog.dart';
+import 'package:web/presentation/view/logout_dialog.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key? key}) : super(key: key);
@@ -132,7 +133,14 @@ class DrawerScreen extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) {
+                  return const LogoutDialog();
+                },
+              );
+            },
             leading: const Icon(
               Icons.logout,
               color: AppColors.darkGray,

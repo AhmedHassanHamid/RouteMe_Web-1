@@ -6,3 +6,6 @@ const String searchOrders = "searchOrders";
 const String updateUserStatus = "updateUserStatus";
 const String getUsers = "getUsers";
 const String deleteUser = "deleteUser";
+const String addDispatcher = "addDispatcher";
+const String addDriver = "addDriver";
+const String addVendor = "addVendor";

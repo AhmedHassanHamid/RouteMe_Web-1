@@ -20,9 +20,13 @@ class AppRouter {
       case '/register':
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case '/verify':
-        return MaterialPageRoute(builder: (_) => VerifyScreen());
+        return MaterialPageRoute(builder: (_) => VerifyScreen(
+          data: settings.arguments,
+        ));
       case '/reset':
-        return MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
+        return MaterialPageRoute(builder: (_) => ResetPasswordScreen(
+          data: settings.arguments,
+        ));
       case '/orders':
         return MaterialPageRoute(builder: (_) => OrdersScreen());
       case '/tasks':

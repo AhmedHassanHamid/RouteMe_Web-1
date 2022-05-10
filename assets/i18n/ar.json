@@ -64,5 +64,17 @@
   "commentD": "التعليقات :",
   "id": "الرقم التعريفي",
   "name": "الإسم",
-  "phoneNum": "رقم الهاتف"
+  "phoneNum": "رقم الهاتف",
+  "pickup": "طلب توصيل",
+  "delivered": "تم التوصيل",
+  "rejected": "مرفوض",
+  "cancelled": "ألغيت",
+  "refund": "استرداد",
+  "partial": "استرداد جزئي",
+  "onWay": "في الطريق",
+  "finished": "المهام المنتهية",
+  "noComment": "لا تعليق",
+  "addDriver": "أضف سائق",
+  "addDispatcher":"أضف مرسل",
+  "addVendor": "أضف بائع"
 }

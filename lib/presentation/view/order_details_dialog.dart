@@ -244,10 +244,10 @@ class OrderDetailsDialog extends StatelessWidget {
                                   width: 10,
                                 ),
                                 Text(
-                                  OrderCubit.get(context)
+                                  translate(OrderCubit.get(context)
                                       .searchResponse!
                                       .orders![0]
-                                      .state,
+                                      .state),
                                   style: const TextStyle(
                                     color: AppColors.darkGray,
                                     fontSize: 20,
@@ -268,10 +268,10 @@ class OrderDetailsDialog extends StatelessWidget {
                                   width: 10,
                                 ),
                                 Text(
-                                  OrderCubit.get(context)
+                                    translate(OrderCubit.get(context)
                                       .searchResponse!
                                       .orders![0]
-                                      .comment,
+                                      .comment),
                                   style: const TextStyle(
                                     color: AppColors.darkGray,
                                     fontSize: 20,

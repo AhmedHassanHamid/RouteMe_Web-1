@@ -4,10 +4,10 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:sizer/sizer.dart';
 import 'package:web/business_logic/drivers_cubit/drivers_cubit.dart';
 import 'package:web/data/models/account_model.dart';
-import 'package:web/presentation/screens/delete_dialog.dart';
+import 'package:web/presentation/view/delete_dialog.dart';
 import 'package:web/presentation/styles/colors.dart';
+import 'package:web/presentation/widgets/default_app_button.dart';
 import 'package:web/presentation/widgets/default_icon_button.dart';
-import 'package:web/presentation/widgets/default_search_field.dart';
 import 'package:web/presentation/screens/drawer_screen.dart';
 import 'package:web/presentation/widgets/toast.dart';
 
@@ -15,6 +15,7 @@ class DriversScreen extends StatelessWidget {
   DriversScreen({Key? key}) : super(key: key);
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   final TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     fToast.init(context);
@@ -63,157 +64,172 @@ class DriversScreen extends StatelessWidget {
                   top: 5,
                   bottom: 5,
                 ),
-                child: DefaultSearchField(
-                  controller: searchController,
-                  hintText: translate('search'),
-                  onTap: () {
-                    
-                  },
-                  width: 300,
+                child: DefaultAppButton(
+                  text: translate("addDriver"),
+                  backGround: AppColors.darkPurple,
+                  fontSize: 18,
                   height: 10,
+                  onTap: (){},
+                  width: 100,
+                  textColor: AppColors.white,
                 ),
               ),
+              //   Padding(
+              //     padding: const EdgeInsets.only(
+              //       left: 10,
+              //       right: 10,
+              //       top: 5,
+              //       bottom: 5,
+              //     ),
+              //     child: DefaultSearchField(
+              //       controller: searchController,
+              //       hintText: translate('search'),
+              //       onTap: () {},
+              //       width: 300,
+              //       height: 10,
+              //     ),
+              //   ),
             ],
             centerTitle: true,
           ),
           body: state.isEmpty
               ? const Center(
-            child: CircularProgressIndicator(),
-          )
+                  child: CircularProgressIndicator(),
+                )
               : DriversCubit.get(context).driverResponse!.user == null
-              ? Center(
-            child: Image.asset(
-              "assets/images/noOrder.png",
-              height: 150,
-            ),
-          )
-              : SizedBox(
-            width: 100.w,
-                child: CustomScrollView(
-            scrollDirection: Axis.vertical,
-            slivers: [
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Column(
-                    children: [
-                      DataTable(
-                        showCheckboxColumn: false,
-                        sortColumnIndex: 0,
-                        sortAscending: true,
-                        columns: [
-                          DataColumn(
-                            label: Text(
-                              translate('state'),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              translate('id'),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              translate('name'),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              translate('email'),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              translate('phoneNum'),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              translate('actions'),
+                  ? Center(
+                      child: Image.asset(
+                        "assets/images/noOrder.png",
+                        height: 150,
+                      ),
+                    )
+                  : SizedBox(
+                      width: 100.w,
+                      child: CustomScrollView(
+                        scrollDirection: Axis.vertical,
+                        slivers: [
+                          SliverFillRemaining(
+                            hasScrollBody: false,
+                            child: Column(
+                              children: [
+                                DataTable(
+                                  showCheckboxColumn: false,
+                                  sortColumnIndex: 0,
+                                  sortAscending: true,
+                                  columns: [
+                                    DataColumn(
+                                      label: Text(
+                                        translate('state'),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        translate('id'),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        translate('name'),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        translate('email'),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        translate('phoneNum'),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        translate('actions'),
+                                      ),
+                                    ),
+                                  ],
+                                  rows: DriversCubit.get(context)
+                                      .driverResponse!
+                                      .user!
+                                      .map(
+                                        (data) => DataRow(
+                                          cells: [
+                                            DataCell(Container(
+                                              decoration: BoxDecoration(
+                                                color: data.status == "Online"
+                                                    ? AppColors.green
+                                                    : AppColors.red,
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                              ),
+                                              width: 15,
+                                              height: 15,
+                                            )),
+                                            DataCell(
+                                              Text(
+                                                data.id.toString(),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              Text(
+                                                data.name,
+                                              ),
+                                            ),
+                                            DataCell(
+                                              Text(
+                                                data.email,
+                                              ),
+                                            ),
+                                            DataCell(
+                                              Text(
+                                                data.phone,
+                                              ),
+                                            ),
+                                            DataCell(
+                                              Row(
+                                                children: [
+                                                  DefaultIconButton(
+                                                    width: 35,
+                                                    buttonColor:
+                                                        AppColors.darkPurple,
+                                                    iconColor: AppColors.white,
+                                                    icon: Icons.edit,
+                                                    onTap: () {},
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 15,
+                                                  ),
+                                                  DefaultIconButton(
+                                                    width: 35,
+                                                    buttonColor: AppColors.red,
+                                                    iconColor: AppColors.white,
+                                                    icon: Icons.delete_outlined,
+                                                    onTap: () {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (_) {
+                                                          return DeleteDialog(
+                                                            id: data.id,
+                                                            type: data.type,
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                              ],
                             ),
                           ),
                         ],
-                        rows: DriversCubit.get(context)
-                            .driverResponse!
-                            .user!
-                            .map(
-                              (data) => DataRow(
-                            cells: [
-                              DataCell(
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: data.status == "Online"?AppColors.green:AppColors.red,
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  width: 15,
-                                  height: 15,
-                                )
-                              ),
-                              DataCell(
-                                Text(
-                                  data.id.toString(),
-                                ),
-                              ),
-                              DataCell(
-                                Text(
-                                  data.name,
-                                ),
-                              ),
-                              DataCell(
-                                Text(
-                                  data.email,
-                                ),
-                              ),
-                              DataCell(
-                                Text(
-                                  data.phone,
-                                ),
-                              ),
-                              DataCell(
-                                Row(
-                                  children: [
-                                    DefaultIconButton(
-                                      width: 35,
-                                      buttonColor:
-                                      AppColors.darkPurple,
-                                      iconColor: AppColors.white,
-                                      icon: Icons.edit,
-                                      onTap: () {},
-                                    ),
-                                    const SizedBox(
-                                      width: 15,
-                                    ),
-                                    DefaultIconButton(
-                                      width: 35,
-                                      buttonColor:
-                                      AppColors.red,
-                                      iconColor: AppColors.white,
-                                      icon: Icons.delete_outlined,
-                                      onTap: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (_) {
-                                            return DeleteDialog(
-                                              id: data.id,
-                                              type: data.type,
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                            .toList(),
                       ),
-                    ],
-                  ),
-                ),
-            ],
-          ),
-              ),
+                    ),
         );
       },
     );

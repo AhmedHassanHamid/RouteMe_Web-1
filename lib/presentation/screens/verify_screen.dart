@@ -5,7 +5,9 @@ import 'package:web/presentation/widgets/default_app_button.dart';
 import 'package:web/presentation/widgets/default_text_field.dart';
 
 class VerifyScreen extends StatelessWidget {
-  VerifyScreen({Key? key}) : super(key: key);
+  // ignore: prefer_typing_uninitialized_variables
+  final data;
+  VerifyScreen({this.data, Key? key}) : super(key: key);
 
   final TextEditingController code = TextEditingController();
 

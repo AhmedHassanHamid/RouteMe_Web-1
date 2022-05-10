@@ -64,5 +64,17 @@
   "commentD": "Comments :",
   "id": "ID",
   "name": "Name",
-  "phoneNum": "Phone Number"
+  "phoneNum": "Phone Number",
+  "pickup": "Pick Up",
+  "delivered": "Delivered",
+  "rejected": "Rejected",
+  "cancelled": "Cancelled",
+  "refund": "Refund",
+  "partial": "Partial Refund",
+  "onWay": "On It's Way",
+  "finished": "Finished Tasks",
+  "noComment": "No Comment",
+  "addDriver": "Add Driver",
+  "addDispatcher":"Add Dispatcher",
+  "addVendor": "Add Vendor"
 }

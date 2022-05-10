@@ -5,7 +5,7 @@ import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/widgets/default_app_button.dart';
 import 'package:web/presentation/widgets/default_password_field.dart';
 import 'package:web/presentation/widgets/default_text_field.dart';
-import 'package:web/presentation/screens/loading_dialog.dart';
+import 'package:web/presentation/view/loading_dialog.dart';
 import 'package:web/presentation/widgets/toast.dart';
 
 class RegisterScreen extends StatefulWidget {

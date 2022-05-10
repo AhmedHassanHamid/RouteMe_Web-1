@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:web/constants/end_points.dart';
+import 'package:web/data/local/cache_helper.dart';
 import 'package:web/data/models/account_model.dart';
 import 'package:web/data/network/responses/users_response.dart';
 import 'package:web/data/remote/dio_helper.dart';
@@ -20,7 +21,7 @@ class DispatchersCubit extends Cubit<List<AccountModel>> {
       url: getUsers,
       body: {
         'type': "dispatcher",
-        'server': 'www.OrdServer.com',//CacheHelper.getDataFromSharedPreference(key: "server"),
+        'server': CacheHelper.getDataFromSharedPreference(key: "server"),
       },
     ).then((value) {
       final myData = Map<String, dynamic>.from(value.data);
