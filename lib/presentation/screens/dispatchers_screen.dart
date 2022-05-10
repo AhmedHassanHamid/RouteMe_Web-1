@@ -4,6 +4,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:sizer/sizer.dart';
 import 'package:web/business_logic/dispatchers_cubit/dispatchers_cubit.dart';
 import 'package:web/data/models/account_model.dart';
+import 'package:web/presentation/view/add_dispatcher_dialog.dart';
 import 'package:web/presentation/view/delete_dialog.dart';
 import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/widgets/default_app_button.dart';
@@ -68,7 +69,14 @@ class DispatchersScreen extends StatelessWidget {
                   backGround: AppColors.darkPurple,
                   fontSize: 18,
                   height: 10,
-                  onTap: (){},
+                  onTap: (){
+                    showDialog(
+                      context: context,
+                      builder: (_) {
+                        return const AddDispatcherDialog();
+                      },
+                    );
+                  },
                   width: 100,
                   textColor: AppColors.white,
                 ),
