@@ -15,6 +15,7 @@
   "serverValidate": "من فضلك ادخل إسم السيرفر",
   "companyValidate": "من فضلك ادخل إسم الشركة",
   "nameValidate": "من فضلك ادخل الإسم",
+  "brandNameValidate": "من فضلك ادخل اسم البائع",
   "emailValidate": "من فضلك ادخل البريد الإلكتروني",
   "phoneValidate": "من فضلك ادخل رقم الهاتف",
   "passwordValidate": "من فضلك ادخل كلمة المرور",
@@ -56,6 +57,8 @@
   "actions": "إجراءات",
   "orderDetails": "تفاصيل الطلب",
   "client": "اسم العميل :",
+  "driverName": "اسم السائق :",
+  "taskNo": "رقم المهمة :",
   "orderNo": "رقم الطلب :",
   "phone": "رقم العميل :",
   "vendorD": "البائع :",
@@ -78,5 +81,9 @@
   "noComment": "لا تعليق",
   "addDriver": "أضف سائق",
   "addDispatcher":"أضف مرسل",
-  "addVendor": "أضف بائع"
+  "addVendor": "أضف بائع",
+  "taskId": "رقم المهمة",
+  "driver": "السائق",
+  "taskDetails": "تفاصيل المهمة",
+  "codeValidate": "رمز التحقق غير مطابق"
 }

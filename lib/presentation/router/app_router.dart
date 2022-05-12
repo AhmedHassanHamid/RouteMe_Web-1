@@ -7,6 +7,7 @@ import 'package:web/presentation/screens/login_screen.dart';
 import 'package:web/presentation/screens/register_screen.dart';
 import 'package:web/presentation/screens/splash_screen.dart';
 import 'package:web/presentation/screens/tasks_map_screen.dart';
+import 'package:web/presentation/screens/tasks_screen.dart';
 import 'package:web/presentation/screens/vendors_screen.dart';
 import 'package:web/presentation/screens/verify_screen.dart';
 
@@ -30,6 +31,8 @@ class AppRouter {
       case '/orders':
         return MaterialPageRoute(builder: (_) => OrdersScreen());
       case '/tasks':
+        return MaterialPageRoute(builder: (_) => TasksScreen());
+      case '/tasksMap':
         return MaterialPageRoute(builder: (_) => const TasksMapScreen());
       case '/drivers':
         return MaterialPageRoute(builder: (_) => DriversScreen());

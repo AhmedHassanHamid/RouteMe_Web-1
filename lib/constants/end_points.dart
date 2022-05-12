@@ -9,3 +9,4 @@ const String deleteUser = "deleteUser";
 const String addDispatcher = "addDispatcher";
 const String addDriver = "addDriver";
 const String addVendor = "addVendor";
+const String searchTasks = "searchTasks";

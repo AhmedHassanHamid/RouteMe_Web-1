@@ -53,7 +53,7 @@ class OrderCubit extends Cubit<List<OrderModel>> {
         return searchResponse!.message;
       }
     }).catchError((error) {
-      showToast(error.toString());
+      //showToast(error.toString());
     });
     return searchResponse!.orders;
   }

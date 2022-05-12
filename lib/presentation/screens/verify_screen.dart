@@ -3,6 +3,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/widgets/default_app_button.dart';
 import 'package:web/presentation/widgets/default_text_field.dart';
+import 'package:web/presentation/widgets/toast.dart';
 
 class VerifyScreen extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
@@ -54,11 +55,11 @@ class VerifyScreen extends StatelessWidget {
                       const SizedBox(
                         height: 5,
                       ),
-                      const Align(
+                      Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "example@gmail.com",
-                          style: TextStyle(
+                          data['email'] ?? '',
+                          style: const TextStyle(
                             fontSize: 15,
                             color: AppColors.darkGray,
                           ),
@@ -81,7 +82,16 @@ class VerifyScreen extends StatelessWidget {
                         backGround: AppColors.darkPurple,
                         fontSize: 25,
                         height: 60,
-                        onTap: () {},
+                        onTap: () {
+                          code.text == data['code']?
+                          Navigator.pushNamed(context, '/reset',
+                            arguments: {
+                              'type': data['type'],
+                              'userId': data['userId'],
+                            },
+                          ):
+                          showToast(translate('codeValidate'));
+                        },
                         width: 200,
                         textColor: AppColors.white,
                       ),

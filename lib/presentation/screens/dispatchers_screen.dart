@@ -81,21 +81,6 @@ class DispatchersScreen extends StatelessWidget {
                   textColor: AppColors.white,
                 ),
               ),
-              //   Padding(
-              //     padding: const EdgeInsets.only(
-              //       left: 10,
-              //       right: 10,
-              //       top: 5,
-              //       bottom: 5,
-              //     ),
-              //     child: DefaultSearchField(
-              //       controller: searchController,
-              //       hintText: translate('search'),
-              //       onTap: () {},
-              //       width: 300,
-              //       height: 10,
-              //     ),
-              //   ),
             ],
             centerTitle: true,
           ),

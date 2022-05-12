@@ -15,7 +15,7 @@ class SplashScreen extends StatelessWidget {
       builder: (context, state) {
         AppCubit.get(context).navigate(afterSuccess: () {
           CacheHelper.getDataFromSharedPreference(key: 'isLogin') ?? false
-              ? Navigator.of(context).pushNamed('/drivers')
+              ? Navigator.of(context).pushNamed('/tasks')
               : Navigator.of(context).pushNamed('/login');
         });
         return Scaffold(

@@ -4,6 +4,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:sizer/sizer.dart';
 import 'package:web/business_logic/vendor_cubit/vendors_cubit.dart';
 import 'package:web/data/models/vendor_model.dart';
+import 'package:web/presentation/view/add_vendor_dialog.dart';
 import 'package:web/presentation/view/delete_dialog.dart';
 import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/widgets/default_app_button.dart';
@@ -68,26 +69,18 @@ class VendorsScreen extends StatelessWidget {
                   backGround: AppColors.darkPurple,
                   fontSize: 18,
                   height: 10,
-                  onTap: (){},
+                  onTap: (){
+                    showDialog(
+                      context: context,
+                      builder: (_) {
+                        return const AddVendorDialog();
+                      },
+                    );
+                  },
                   width: 100,
                   textColor: AppColors.white,
                 ),
               ),
-              //   Padding(
-              //     padding: const EdgeInsets.only(
-              //       left: 10,
-              //       right: 10,
-              //       top: 5,
-              //       bottom: 5,
-              //     ),
-              //     child: DefaultSearchField(
-              //       controller: searchController,
-              //       hintText: translate('search'),
-              //       onTap: () {},
-              //       width: 300,
-              //       height: 10,
-              //     ),
-              //   ),
             ],
             centerTitle: true,
           ),
