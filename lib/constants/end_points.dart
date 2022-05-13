@@ -11,3 +11,4 @@ const String addDriver = "addDriver";
 const String addVendor = "addVendor";
 const String searchTasks = "searchTasks";
 const String updateUser = "updateUser";
+const String register = "register";

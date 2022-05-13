@@ -18,6 +18,7 @@ class DriversCubit extends Cubit<List<AccountModel>> {
 
   UsersDataResponse? driverResponse;
   SuccessfulResponse? successfulResponse;
+  List<AccountModel> ifNull = [];
 
   Future getDrivers() async {
     await DioHelper.postData(
@@ -30,14 +31,14 @@ class DriversCubit extends Cubit<List<AccountModel>> {
       final myData = Map<String, dynamic>.from(value.data);
       driverResponse = UsersDataResponse.fromJson(myData);
       if (driverResponse!.status == 200) {
-        return driverResponse!.user;
+        return driverResponse!.user ?? ifNull;
       } else {
         return driverResponse!.message;
       }
     }).catchError((error) {
       //showToast(error.toString());
     });
-    return driverResponse!.user;
+    return driverResponse!.user ?? ifNull;
   }
 
   Future addNewDriver({

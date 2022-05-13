@@ -15,6 +15,7 @@ import 'package:web/business_logic/edit_user_cubit/edit_user_cubit.dart';
 import 'package:web/business_logic/language_cubit/language_cubit.dart';
 import 'package:web/business_logic/login_cubit/login_cubit.dart';
 import 'package:web/business_logic/orders_cubit/orders_cubit.dart';
+import 'package:web/business_logic/register_cubit/register_cubit.dart';
 import 'package:web/business_logic/reset_password_cubit/reset_password_cubit.dart';
 import 'package:web/business_logic/tasks_cubit/tasks_cubit.dart';
 import 'package:web/business_logic/vendor_cubit/vendors_cubit.dart';
@@ -30,7 +31,7 @@ late LocalizationDelegate delegate;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   BlocOverrides.runZoned(
-        () async {
+    () async {
       DioHelper.init();
       await CacheHelper.init();
       final locale =
@@ -86,6 +87,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: ((context) => LoginCubit()),
+        ),
+        BlocProvider(
+          create: ((context) => RegisterCubit()),
         ),
         BlocProvider(
           create: ((context) => VerifyCubit()),

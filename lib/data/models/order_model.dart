@@ -1,6 +1,7 @@
 class OrderModel {
   int id;
   int itemCount;
+  String server;
   String clientName;
   String clientPhone;
   double lon;
@@ -15,6 +16,7 @@ class OrderModel {
 
   OrderModel({
     required this.id,
+    required this.server,
     required this.itemCount,
     required this.clientName,
     required this.clientPhone,
@@ -31,6 +33,7 @@ class OrderModel {
 
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
     id: json["id"],
+    server: json["server"],
     itemCount: json["itemCount"],
     clientName: json["clientName"],
     clientPhone: json["clientPhone"],
@@ -47,6 +50,7 @@ class OrderModel {
 
   Map<String, dynamic> toJson() => {
     "id": id,
+    "server": server,
     "itemCount": itemCount,
     "clientName": clientName,
     "clientPhone": clientPhone,

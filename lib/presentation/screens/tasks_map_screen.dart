@@ -64,9 +64,23 @@ class _TasksMapScreenState extends State<TasksMapScreen> {
         listener: (context, state) {},
         builder: (context, state) {
           return state.isEmpty
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+              ? FlutterMap(
+            options: MapOptions(
+              center: latlong.LatLng(30.081742445136637, 31.318578275265946),
+              zoom: 12.0,
+            ),
+            layers: [
+              TileLayerOptions(
+                urlTemplate:
+                "https://api.mapbox.com/styles/v1/routeme2022/cl33l9s2c004u14ql00qo6t0o/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoicm91dGVtZTIwMjIiLCJhIjoiY2wzM2o1bnc4MDJ2dDNsa2JtaHhpc3IyciJ9.Xo0P7tRS4dIHvLptBUX0pg",
+                additionalOptions: {
+                  'accessToken':
+                  "pk.eyJ1Ijoicm91dGVtZTIwMjIiLCJhIjoiY2wzM2o1bnc4MDJ2dDNsa2JtaHhpc3IyciJ9.Xo0P7tRS4dIHvLptBUX0pg",
+                  'id': "mapbox.mapbox-streets-v8"
+                },
+              ),
+            ],
+          )
               : FlutterMap(
                   options: MapOptions(
                     center: latlong.LatLng(

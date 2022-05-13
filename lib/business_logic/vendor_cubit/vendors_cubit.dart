@@ -19,26 +19,27 @@ class VendorsCubit extends Cubit<List<VendorModel>> {
 
   VendorsResponse? vendorResponse;
   SuccessfulResponse? successfulResponse;
+  List<VendorModel> ifNull = [];
 
   Future getVendors() async {
     await DioHelper.postData(
       url: getUsers,
       body: {
         'type': "vendor",
-        'server': 'alpha.routeme',//CacheHelper.getDataFromSharedPreference(key: "server"),
+        'server': CacheHelper.getDataFromSharedPreference(key: "server"),
       },
     ).then((value) {
       final myData = Map<String, dynamic>.from(value.data);
       vendorResponse = VendorsResponse.fromJson(myData);
       if (vendorResponse!.status == 200) {
-        return vendorResponse!.user;
+        return vendorResponse!.user ?? ifNull;
       } else {
         return vendorResponse!.message;
       }
     }).catchError((error) {
       //showToast(error.toString());
     });
-    return vendorResponse!.user;
+    return vendorResponse!.user ?? ifNull;
   }
 
 

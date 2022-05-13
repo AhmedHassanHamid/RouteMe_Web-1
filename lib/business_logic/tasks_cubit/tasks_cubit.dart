@@ -21,10 +21,13 @@ class TasksCubit extends Cubit<List<TaskModel>> {
   TaskResponse? taskResponse, searchResponse;
   final List<Marker> markers = [];
 
+  List<TaskModel> ifNull = [];
+
   Future getTasks() async {
     await DioHelper.postData(
       url: searchTasks,
       body: {
+        'server': CacheHelper.getDataFromSharedPreference(key: "server"),
         'dispatcherId': CacheHelper.getDataFromSharedPreference(key: "userId"),
       },
     ).then((value) {
@@ -46,14 +49,14 @@ class TasksCubit extends Cubit<List<TaskModel>> {
             ),
           );
         }
-        return taskResponse!.tasks;
+        return taskResponse!.tasks ?? ifNull;
       } else {
         return taskResponse!.message;
       }
     }).catchError((error) {
       //showToast(error.toString());
     });
-    return taskResponse!.tasks;
+    return taskResponse!.tasks ?? ifNull;
   }
 
   Future searchForTask({
@@ -63,6 +66,7 @@ class TasksCubit extends Cubit<List<TaskModel>> {
     await DioHelper.postData(
       url: searchTasks,
       body: {
+        'server': CacheHelper.getDataFromSharedPreference(key: "server"),
         'dispatcherId': CacheHelper.getDataFromSharedPreference(key: "userId"),
         'taskId': taskId,
       },
@@ -71,7 +75,7 @@ class TasksCubit extends Cubit<List<TaskModel>> {
       searchResponse = TaskResponse.fromJson(myData);
       if (searchResponse!.status == 200) {
         afterSuccess!();
-        return searchResponse!.tasks;
+        return searchResponse!.tasks ?? ifNull;
       } else {
         showToast(searchResponse!.message);
         return searchResponse!.message;
@@ -79,7 +83,7 @@ class TasksCubit extends Cubit<List<TaskModel>> {
     }).catchError((error) {
       //showToast(error.toString());
     });
-    return searchResponse!.tasks;
+    return searchResponse!.tasks ?? ifNull;
   }
 
   void get myTasks async => emit(await getTasks());

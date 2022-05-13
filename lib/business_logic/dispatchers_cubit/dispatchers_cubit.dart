@@ -18,6 +18,7 @@ class DispatchersCubit extends Cubit<List<AccountModel>> {
 
   UsersDataResponse? dispatchersResponse;
   SuccessfulResponse? successfulResponse;
+  List<AccountModel> ifNull = [];
 
   Future getDispatchers() async {
     await DioHelper.postData(
@@ -30,14 +31,14 @@ class DispatchersCubit extends Cubit<List<AccountModel>> {
       final myData = Map<String, dynamic>.from(value.data);
       dispatchersResponse = UsersDataResponse.fromJson(myData);
       if (dispatchersResponse!.status == 200) {
-        return dispatchersResponse!.user;
+        return dispatchersResponse!.user ?? ifNull;
       } else {
         return dispatchersResponse!.message;
       }
     }).catchError((error) {
       //showToast(error.toString());
     });
-    return dispatchersResponse!.user;
+    return dispatchersResponse!.user ?? ifNull;
   }
 
   Future addNewDispatcher({

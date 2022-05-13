@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:sizer/sizer.dart';
+import 'package:web/business_logic/register_cubit/register_cubit.dart';
 import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/widgets/default_app_button.dart';
 import 'package:web/presentation/widgets/default_password_field.dart';
@@ -123,6 +124,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               context: context,
                               builder: (_) {
                                 return const LoadingDialog();
+                              },
+                            ),
+                            RegisterCubit.get(context)
+                                .userRegister(
+                              name: company.text,
+                              server: server.text,
+                              email: email.text,
+                              password: password.text,
+                              phone: phone.text,
+                              afterSuccess: (){
+                                Navigator.pushNamed(context, "/login");
+                              },
+                              afterFail: (){
+                                Navigator.pop(context);
                               },
                             )
                           };

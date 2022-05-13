@@ -8,6 +8,7 @@ class TaskModel {
   double price;
   double lon;
   double lat;
+  String server;
   String driver;
   String vendor;
   String address;
@@ -22,6 +23,7 @@ class TaskModel {
 
   TaskModel({
     required this.id,
+    required this.server,
     required this.itemCount,
     required this.clientName,
     required this.clientPhone,
@@ -44,6 +46,7 @@ class TaskModel {
 
   factory TaskModel.fromJson(Map<String, dynamic> json) => TaskModel(
     id: json["id"],
+    server: json["server"],
     itemCount: json["itemCount"],
     clientName: json["clientName"],
     clientPhone: json["clientPhone"],
@@ -66,6 +69,7 @@ class TaskModel {
 
   Map<String, dynamic> toJson() => {
     "id": id,
+    "server": server,
     "itemCount": itemCount,
     "clientName": clientName,
     "clientPhone": clientPhone,

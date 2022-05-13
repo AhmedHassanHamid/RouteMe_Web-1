@@ -21,7 +21,7 @@ class AccountModel {
 
   factory AccountModel.fromJson(Map<String, dynamic> json) => AccountModel(
     id: json["id"],
-    status: json["status"],
+    status: json["status"] ?? "",
     name: json["name"],
     server: json["server"],
     email: json["email"],
