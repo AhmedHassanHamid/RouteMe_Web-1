@@ -22,6 +22,7 @@ class _AddVendorDialogState extends State<AddVendorDialog> {
   TextEditingController brandName = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController phone = TextEditingController();
   bool passwordVisible = true;
 
   void showPassword() {
@@ -40,112 +41,126 @@ class _AddVendorDialogState extends State<AddVendorDialog> {
           backgroundColor: AppColors.transparent,
           body: state.isEmpty
               ? const Center(
-            child: CircularProgressIndicator(),
-          )
+                  child: CircularProgressIndicator(),
+                )
               : Center(
-            child: Container(
-              width: 30.w,
-              height: 60.h,
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () => Navigator.pop(context),
-                            child: const Icon(
-                              Icons.close,
-                              color: AppColors.gray,
+                  child: Container(
+                    width: 30.w,
+                    height: 70.h,
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                InkWell(
+                                  onTap: () => Navigator.pop(context),
+                                  child: const Icon(
+                                    Icons.close,
+                                    color: AppColors.gray,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Center(
-                        child: Text(
-                          translate("addVendor"),
-                          style: const TextStyle(
-                            color: AppColors.darkGray,
-                            fontSize: 25,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      DefaultTextField(
-                        controller: brandName,
-                        hintText: translate("vendor"),
-                      ),
-                      DefaultTextField(
-                        controller: email,
-                        hintText: translate("email"),
-                      ),
-                      DefaultPasswordField(
-                        password: passwordVisible,
-                        controller: password,
-                        icon: IconButton(
-                          icon: Icon(
-                            passwordVisible
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
-                          onPressed: showPassword,
-                        ),
-                        hintText: translate("password"),
-                        submit: (value) {},
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Center(
-                        child: DefaultAppButton(
-                          text: translate('addVendor'),
-                          backGround: AppColors.darkPurple,
-                          fontSize: 20,
-                          height: 50,
-                          onTap: () {
-                            brandName.text == '' ?
-                            showToast(translate('brandNameValidate')):
-                            email.text == '' ?
-                            showToast(translate('emailValidate')):
-                            password.text == '' ?
-                            showToast(translate('passwordValidate')):
-                            {
-                              showDialog(
-                                context: context,
-                                builder: (_) {
-                                  return const LoadingDialog();
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Center(
+                              child: Text(
+                                translate("addVendor"),
+                                style: const TextStyle(
+                                  color: AppColors.darkGray,
+                                  fontSize: 25,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            DefaultTextField(
+                              controller: brandName,
+                              hintText: translate("vendor"),
+                            ),
+                            DefaultTextField(
+                              controller: email,
+                              hintText: translate("email"),
+                            ),
+                            DefaultPasswordField(
+                              password: passwordVisible,
+                              controller: password,
+                              icon: IconButton(
+                                icon: Icon(
+                                  passwordVisible
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                ),
+                                onPressed: showPassword,
+                              ),
+                              hintText: translate("password"),
+                              submit: (value) {},
+                            ),
+                            DefaultTextField(
+                              controller: phone,
+                              hintText: translate("phoneNum"),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Center(
+                              child: DefaultAppButton(
+                                text: translate('addVendor'),
+                                backGround: AppColors.darkPurple,
+                                fontSize: 20,
+                                height: 50,
+                                onTap: () {
+                                  brandName.text == ''
+                                      ? showToast(
+                                          translate('brandNameValidate'))
+                                      : email.text == ''
+                                          ? showToast(
+                                              translate('emailValidate'))
+                                          : password.text == ''
+                                              ? showToast(
+                                                  translate('passwordValidate'))
+                                              : phone.text == ''
+                                                  ? showToast(translate(
+                                                      'phoneValidate'))
+                                                  : {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (_) {
+                                                          return const LoadingDialog();
+                                                        },
+                                                      ),
+                                                      VendorsCubit.get(context)
+                                                          .addNewVendor(
+                                                        brandName:
+                                                            brandName.text,
+                                                        email: email.text,
+                                                        password: password.text,
+                                                        phone: phone.text,
+                                                        afterSuccess: () =>
+                                                            Navigator.pop(
+                                                                context),
+                                                      ),
+                                                    };
                                 },
+                                width: 15.w,
+                                textColor: AppColors.white,
                               ),
-                              VendorsCubit.get(context)
-                                  .addNewVendor(
-                                  brandName: brandName.text,
-                                  email: email.text,
-                                  password: password.text,
-                                  afterSuccess: () => Navigator.pop(context)
-                              ),
-                            };
-                          },
-                          width: 15.w,
-                          textColor: AppColors.white,
+                            ),
+                          ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
         );
       },
     );

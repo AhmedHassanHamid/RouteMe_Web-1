@@ -2,26 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:sizer/sizer.dart';
-import 'package:web/business_logic/dispatchers_cubit/dispatchers_cubit.dart';
-import 'package:web/data/models/account_model.dart';
+import 'package:web/business_logic/edit_user_cubit/edit_user_cubit.dart';
 import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/view/loading_dialog.dart';
 import 'package:web/presentation/widgets/default_app_button.dart';
-import 'package:web/presentation/widgets/default_password_field.dart';
 import 'package:web/presentation/widgets/default_text_field.dart';
 import 'package:web/presentation/widgets/toast.dart';
 
-class AddDispatcherDialog extends StatefulWidget {
-  const AddDispatcherDialog({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class EditUserDialog extends StatefulWidget {
+  String name, email, phone, type;
+  int id;
+
+  EditUserDialog({
+    required this.id,
+    required this.type,
+    required this.name,
+    required this.email,
+    required this.phone,
+    Key? key,
+  }) : super(key: key);
 
   @override
-  State<AddDispatcherDialog> createState() => _AddDispatcherDialogState();
+  State<EditUserDialog> createState() => _EditUserDialogState();
 }
 
-class _AddDispatcherDialogState extends State<AddDispatcherDialog> {
+class _EditUserDialogState extends State<EditUserDialog> {
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
   TextEditingController phone = TextEditingController();
   bool passwordVisible = true;
 
@@ -32,21 +40,25 @@ class _AddDispatcherDialogState extends State<AddDispatcherDialog> {
   }
 
   @override
+  void initState() {
+    name.text = widget.name;
+    email.text = widget.email;
+    phone.text = widget.phone;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     fToast.init(context);
-    return BlocConsumer<DispatchersCubit, List<AccountModel>>(
+    return BlocConsumer<EditUserCubit, EditUserState>(
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
           backgroundColor: AppColors.transparent,
-          body: state.isEmpty
-              ? const Center(
-            child: CircularProgressIndicator(),
-          )
-              : Center(
+          body: Center(
             child: Container(
               width: 30.w,
-              height: 70.h,
+              height: 50.h,
               decoration: BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -73,7 +85,7 @@ class _AddDispatcherDialogState extends State<AddDispatcherDialog> {
                       ),
                       Center(
                         child: Text(
-                          translate("addDispatcher"),
+                          translate("edit"),
                           style: const TextStyle(
                             color: AppColors.darkGray,
                             fontSize: 25,
@@ -91,20 +103,6 @@ class _AddDispatcherDialogState extends State<AddDispatcherDialog> {
                         controller: email,
                         hintText: translate("email"),
                       ),
-                      DefaultPasswordField(
-                        password: passwordVisible,
-                        controller: password,
-                        icon: IconButton(
-                          icon: Icon(
-                            passwordVisible
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
-                          onPressed: showPassword,
-                        ),
-                        hintText: translate("password"),
-                        submit: (value) {},
-                      ),
                       DefaultTextField(
                         controller: phone,
                         hintText: translate("phoneNum"),
@@ -114,35 +112,50 @@ class _AddDispatcherDialogState extends State<AddDispatcherDialog> {
                       ),
                       Center(
                         child: DefaultAppButton(
-                          text: translate('addDispatcher'),
+                          text: translate('save'),
                           backGround: AppColors.darkPurple,
                           fontSize: 20,
                           height: 50,
                           onTap: () {
-                            name.text == '' ?
-                            showToast(translate('nameValidate')):
-                            email.text == '' ?
-                            showToast(translate('emailValidate')):
-                            password.text == '' ?
-                            showToast(translate('passwordValidate')):
-                            phone.text == '' ?
-                            showToast(translate('phoneValidate')):
-                            {
-                              showDialog(
-                                context: context,
-                                builder: (_) {
-                                  return const LoadingDialog();
-                                },
-                              ),
-                              DispatchersCubit.get(context)
-                                  .addNewDispatcher(
-                                  name: name.text,
-                                  email: email.text,
-                                  password: password.text,
-                                  phone: phone.text,
-                                  afterSuccess: () => Navigator.pop(context)
-                              ),
-                            };
+                            name.text == ''
+                                ? showToast(translate('nameValidate'))
+                                : email.text == ''
+                                    ? showToast(translate('emailValidate'))
+                                    : phone.text == ''
+                                        ? showToast(translate('phoneValidate'))
+                                        : {
+                                            showDialog(
+                                              context: context,
+                                              builder: (_) {
+                                                return const LoadingDialog();
+                                              },
+                                            ),
+                                            widget.type == "driver"
+                                                ? EditUserCubit.get(context)
+                                                    .updateEmployee(
+                                                    id: widget.id,
+                                                    type: "driver",
+                                                    name: name.text,
+                                                    email: email.text,
+                                                    phone: phone.text,
+                                                  )
+                                                : widget.type == "dispatcher"
+                                                    ? EditUserCubit.get(context)
+                                                        .updateEmployee(
+                                                        id: widget.id,
+                                                        type: "dispatcher",
+                                                        name: name.text,
+                                                        email: email.text,
+                                                        phone: phone.text,
+                                                      )
+                                                    : EditUserCubit.get(context)
+                                                        .updateVendor(
+                                                        id: widget.id,
+                                                        name: name.text,
+                                                        email: email.text,
+                                                        phone: phone.text,
+                                                      ),
+                                          };
                           },
                           width: 15.w,
                           textColor: AppColors.white,

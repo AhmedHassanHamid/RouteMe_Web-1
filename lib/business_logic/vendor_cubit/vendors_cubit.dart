@@ -46,6 +46,7 @@ class VendorsCubit extends Cubit<List<VendorModel>> {
     required String brandName,
     required String email,
     required String password,
+    required String phone,
     required VoidCallback afterSuccess,
   }) async {
     await DioHelper.postData(
@@ -55,6 +56,7 @@ class VendorsCubit extends Cubit<List<VendorModel>> {
         'brandName': brandName,
         'email': email,
         'password': password,
+        'phone': phone,
       },
     ).then((value) {
       final myData = Map<String, dynamic>.from(value.data);

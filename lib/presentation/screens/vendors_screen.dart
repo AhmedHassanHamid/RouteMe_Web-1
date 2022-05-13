@@ -7,6 +7,7 @@ import 'package:web/data/models/vendor_model.dart';
 import 'package:web/presentation/view/add_vendor_dialog.dart';
 import 'package:web/presentation/view/delete_dialog.dart';
 import 'package:web/presentation/styles/colors.dart';
+import 'package:web/presentation/view/edit_user_dialog.dart';
 import 'package:web/presentation/widgets/default_app_button.dart';
 import 'package:web/presentation/widgets/default_icon_button.dart';
 import 'package:web/presentation/screens/drawer_screen.dart';
@@ -170,7 +171,20 @@ class VendorsScreen extends StatelessWidget {
                                       AppColors.darkPurple,
                                       iconColor: AppColors.white,
                                       icon: Icons.edit,
-                                      onTap: () {},
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) {
+                                            return EditUserDialog(
+                                              id: data.id,
+                                              name: data.name,
+                                              email: data.email,
+                                              phone: data.phone,
+                                              type: "vendor",
+                                            );
+                                          },
+                                        );
+                                      },
                                     ),
                                     const SizedBox(
                                       width: 15,

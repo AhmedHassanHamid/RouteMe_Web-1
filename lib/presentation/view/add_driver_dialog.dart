@@ -46,7 +46,7 @@ class _AddDriverDialogState extends State<AddDriverDialog> {
               : Center(
                   child: Container(
                     width: 30.w,
-                    height: 75.h,
+                    height: 70.h,
                     decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(10),

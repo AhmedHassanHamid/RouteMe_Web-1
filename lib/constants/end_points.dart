@@ -10,3 +10,4 @@ const String addDispatcher = "addDispatcher";
 const String addDriver = "addDriver";
 const String addVendor = "addVendor";
 const String searchTasks = "searchTasks";
+const String updateUser = "updateUser";

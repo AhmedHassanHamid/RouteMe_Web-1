@@ -86,5 +86,7 @@
   "driver": "Driver",
   "taskDetails": "Task Details",
   "tasksMap": "Tasks Map",
-  "codeValidate": "Verification Code isn't Matched"
+  "codeValidate": "Verification Code isn't Matched",
+  "save": "Save Data",
+  "edit": "Edit User"
 }
