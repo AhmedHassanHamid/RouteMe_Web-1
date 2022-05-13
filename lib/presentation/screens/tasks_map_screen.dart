@@ -1,13 +1,11 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:geocode/geocode.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:sizer/sizer.dart';
+import 'package:latlong2/latlong.dart' as latlong;
+import 'package:web/business_logic/tasks_cubit/tasks_cubit.dart';
+import 'package:web/data/models/task_model.dart';
 import 'package:web/presentation/styles/colors.dart';
-import 'package:web/presentation/widgets/default_app_button.dart';
-import 'package:web/presentation/widgets/default_search_field.dart';
 import 'package:web/presentation/screens/drawer_screen.dart';
 import 'package:web/presentation/widgets/toast.dart';
 
@@ -19,67 +17,9 @@ class TasksMapScreen extends StatefulWidget {
 }
 
 class _TasksMapScreenState extends State<TasksMapScreen> {
-  TextEditingController searchController = TextEditingController();
-  final Completer<GoogleMapController> _controller = Completer();
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-  final Map<String, Marker> _markers = {};
   String myAddress = "";
   double lon = 0, lat = 0;
-  GeoCode geoCode = GeoCode();
-
-  static const CameraPosition _initialLocation = CameraPosition(
-    target: LatLng(
-      30.049960701609457,
-      31.23683759550562,
-    ),
-    zoom: 18,
-  );
-
-  Future<void> getMyLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(
-            position.latitude,
-            position.longitude,
-          ),
-          zoom: 18,
-        ),
-      ),
-    );
-    getAddress(LatLng(position.latitude, position.longitude));
-    addMarker(LatLng(position.latitude, position.longitude));
-  }
-
-  void addMarker(LatLng position) async {
-    setState(() {
-      _markers.clear();
-      final marker = Marker(
-        markerId: const MarkerId("orderLocation"),
-        icon: BitmapDescriptor.defaultMarkerWithHue(
-          BitmapDescriptor.hueViolet,
-        ),
-        position: position,
-      );
-      _markers["orderLocation"] = marker;
-    });
-    getAddress(LatLng(position.latitude, position.longitude));
-  }
-
-  void getAddress(LatLng position) async {
-    Address address = await geoCode.reverseGeocoding(
-      latitude: position.latitude,
-      longitude: position.longitude,
-    );
-    lat = position.latitude;
-    lon = position.longitude;
-    myAddress =
-        "${address.streetNumber}, ${address.streetAddress}, ${address.city}, ${address.region}, ${address.countryName}";
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,91 +27,70 @@ class _TasksMapScreenState extends State<TasksMapScreen> {
     return Scaffold(
       key: _key,
       drawer: const DrawerScreen(),
-      body: Row(
-        children: [
-          Container(
-            width: 300,
-            decoration: const BoxDecoration(
-              color: AppColors.white,
+      backgroundColor: AppColors.white,
+      appBar: AppBar(
+        backgroundColor: AppColors.white,
+        title: Text(
+          translate('tasksMap'),
+          style: const TextStyle(
+            color: AppColors.darkGray,
+            fontSize: 20,
+          ),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.only(
+            left: 5,
+            right: 5,
+            top: 5,
+            bottom: 5,
+          ),
+          child: InkWell(
+            onTap: () => _key.currentState!.openDrawer(),
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.darkPurple,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: const Icon(
+                Icons.menu,
+                color: AppColors.white,
+              ),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    InkWell(
-                      onTap: () => _key.currentState!.openDrawer(),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: 1.h,
-                          right:1.w,
-                          left: 1.w,
-                        ),
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: AppColors.darkPurple,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Icon(
-                            Icons.menu,
-                            color: AppColors.white,
-                          ),
-                        ),
-                      ),
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: BlocConsumer<TasksCubit, List<TaskModel>>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return state.isEmpty
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : FlutterMap(
+                  options: MapOptions(
+                    center: latlong.LatLng(
+                      TasksCubit.get(context).taskResponse!.tasks![0].lat,
+                      TasksCubit.get(context).taskResponse!.tasks![0].lon,
+                    ),
+                    zoom: 12.0,
+                  ),
+                  layers: [
+                    TileLayerOptions(
+                      urlTemplate:
+                          "https://api.mapbox.com/styles/v1/routeme2022/cl33l9s2c004u14ql00qo6t0o/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoicm91dGVtZTIwMjIiLCJhIjoiY2wzM2o1bnc4MDJ2dDNsa2JtaHhpc3IyciJ9.Xo0P7tRS4dIHvLptBUX0pg",
+                      additionalOptions: {
+                        'accessToken':
+                            "pk.eyJ1Ijoicm91dGVtZTIwMjIiLCJhIjoiY2wzM2o1bnc4MDJ2dDNsa2JtaHhpc3IyciJ9.Xo0P7tRS4dIHvLptBUX0pg",
+                        'id': "mapbox.mapbox-streets-v8"
+                      },
+                    ),
+                    MarkerLayerOptions(
+                      markers: TasksCubit.get(context).markers,
                     ),
                   ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                DefaultSearchField(
-                  controller: searchController,
-                  hintText: translate("search"),
-                  onTap: () {
-                    showToast(translate('searchValidate'));
-                  },
-                  width: 250,
-                  height: 35,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                DefaultAppButton(
-                  text: translate("createTask"),
-                  backGround: AppColors.darkPurple,
-                  fontSize: 20,
-                  height: 45,
-                  onTap: () {
-                    showToast(translate("createTask"));
-                  },
-                  width: 200,
-                  textColor: AppColors.white,
-                ),
-              ],
-            ),
-          ),
-          Stack(
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 300,
-                child: GoogleMap(
-                  myLocationButtonEnabled: false,
-                  zoomControlsEnabled: false,
-                  mapType: MapType.normal,
-                  markers: _markers.values.toSet(),
-                  onTap: addMarker,
-                  initialCameraPosition: _initialLocation,
-                  onMapCreated: (GoogleMapController controller) {
-                    _controller.complete(controller);
-                  },
-                ),
-              ),
-            ],
-          ),
-        ],
+                );
+        },
       ),
     );
   }

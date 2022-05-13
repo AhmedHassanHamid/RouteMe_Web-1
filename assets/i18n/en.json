@@ -85,5 +85,6 @@
   "taskId": "Task ID",
   "driver": "Driver",
   "taskDetails": "Task Details",
+  "tasksMap": "Tasks Map",
   "codeValidate": "Verification Code isn't Matched"
 }

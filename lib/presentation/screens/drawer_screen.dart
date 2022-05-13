@@ -28,7 +28,7 @@ class DrawerScreen extends StatelessWidget {
             height: 150,
           ),
           ListTile(
-            onTap: () {},
+            onTap: () => Navigator.pushNamed(context, '/tasksMap'),
             leading: const Icon(
               Icons.map_outlined,
               color: AppColors.darkGray,

@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               email: email.text,
                               password: password.text,
                               afterSuccess: (){
-                                Navigator.pushNamed(context, "/tasks");
+                                Navigator.pushNamed(context, "/tasksMap");
                               },
                               afterFail: (){
                                 Navigator.pop(context);

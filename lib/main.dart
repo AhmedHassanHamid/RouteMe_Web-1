@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: ((context) => AppCubit()..permission),
+          create: ((context) => AppCubit()),
         ),
         BlocProvider(
           create: ((context) => LoginCubit()),
