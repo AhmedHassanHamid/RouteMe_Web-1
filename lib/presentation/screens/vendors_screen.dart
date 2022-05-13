@@ -93,135 +93,135 @@ class VendorsScreen extends StatelessWidget {
             }
             return VendorsCubit.get(context).vendorResponse!.user!.isEmpty
                 ? Center(
-                    child: Image.asset(
-                      "assets/images/noOrder.png",
-                      height: 150,
-                    ),
-                  )
+              child: Image.asset(
+                "assets/images/noOrder.png",
+                height: 150,
+              ),
+            )
                 : SizedBox(
-                    width: 100.w,
-                    child: CustomScrollView(
-                      scrollDirection: Axis.vertical,
-                      slivers: [
-                        SliverFillRemaining(
-                          hasScrollBody: false,
-                          child: Column(
-                            children: [
-                              DataTable(
-                                showCheckboxColumn: false,
-                                sortColumnIndex: 0,
-                                sortAscending: true,
-                                columns: [
-                                  DataColumn(
-                                    label: Text(
-                                      translate('id'),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      translate('name'),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      translate('email'),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      translate('phoneNum'),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      translate('actions'),
-                                    ),
-                                  ),
-                                ],
-                                rows: VendorsCubit.get(context)
-                                    .vendorResponse!
-                                    .user!
-                                    .map(
-                                      (data) => DataRow(
-                                        cells: [
-                                          DataCell(
-                                            Text(
-                                              data.id.toString(),
-                                            ),
-                                          ),
-                                          DataCell(
-                                            Text(
-                                              data.name,
-                                            ),
-                                          ),
-                                          DataCell(
-                                            Text(
-                                              data.email,
-                                            ),
-                                          ),
-                                          DataCell(
-                                            Text(
-                                              data.phone,
-                                            ),
-                                          ),
-                                          DataCell(
-                                            Row(
-                                              children: [
-                                                DefaultIconButton(
-                                                  width: 35,
-                                                  buttonColor:
-                                                      AppColors.darkPurple,
-                                                  iconColor: AppColors.white,
-                                                  icon: Icons.edit,
-                                                  onTap: () {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (_) {
-                                                        return EditUserDialog(
-                                                          id: data.id,
-                                                          name: data.name,
-                                                          email: data.email,
-                                                          phone: data.phone,
-                                                          type: "vendor",
-                                                        );
-                                                      },
-                                                    );
-                                                  },
-                                                ),
-                                                const SizedBox(
-                                                  width: 15,
-                                                ),
-                                                DefaultIconButton(
-                                                  width: 35,
-                                                  buttonColor: AppColors.red,
-                                                  iconColor: AppColors.white,
-                                                  icon: Icons.delete_outlined,
-                                                  onTap: () {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (_) {
-                                                        return DeleteDialog(
-                                                          id: data.id,
-                                                          type: data.type,
-                                                        );
-                                                      },
-                                                    );
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                    .toList(),
+              width: 100.w,
+              child: CustomScrollView(
+                scrollDirection: Axis.vertical,
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Column(
+                      children: [
+                        DataTable(
+                          showCheckboxColumn: false,
+                          sortColumnIndex: 0,
+                          sortAscending: true,
+                          columns: [
+                            DataColumn(
+                              label: Text(
+                                translate('id'),
                               ),
-                            ],
-                          ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                translate('name'),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                translate('email'),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                translate('phoneNum'),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                translate('actions'),
+                              ),
+                            ),
+                          ],
+                          rows: VendorsCubit.get(context)
+                              .vendorResponse!
+                              .user!
+                              .map(
+                                (data) => DataRow(
+                              cells: [
+                                DataCell(
+                                  Text(
+                                    data.id.toString(),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    data.name,
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    data.email,
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    data.phone,
+                                  ),
+                                ),
+                                DataCell(
+                                  Row(
+                                    children: [
+                                      DefaultIconButton(
+                                        width: 35,
+                                        buttonColor:
+                                        AppColors.darkPurple,
+                                        iconColor: AppColors.white,
+                                        icon: Icons.edit,
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (_) {
+                                              return EditUserDialog(
+                                                id: data.id,
+                                                name: data.name,
+                                                email: data.email,
+                                                phone: data.phone,
+                                                type: "vendor",
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                      DefaultIconButton(
+                                        width: 35,
+                                        buttonColor: AppColors.red,
+                                        iconColor: AppColors.white,
+                                        icon: Icons.delete_outlined,
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (_) {
+                                              return DeleteDialog(
+                                                id: data.id,
+                                                type: data.type,
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                              .toList(),
                         ),
                       ],
                     ),
-                  );
+                  ),
+                ],
+              ),
+            );
           },
         ));
   }

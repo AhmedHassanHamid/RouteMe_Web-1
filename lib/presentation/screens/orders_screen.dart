@@ -79,24 +79,24 @@ class OrdersScreen extends StatelessWidget {
                   searchController.text == ''
                       ? showToast(translate('searchValidate'))
                       : {
-                          showDialog(
-                            context: context,
-                            builder: (_) {
-                              return const LoadingDialog();
-                            },
-                          ),
-                          OrderCubit.get(context).searchForOrder(
-                            orderId: searchController.text,
-                            afterSuccess: () {
-                              showDialog(
-                                context: context,
-                                builder: (_) {
-                                  return const OrderDetailsDialog();
-                                },
-                              );
-                            },
-                          )
-                        };
+                    showDialog(
+                      context: context,
+                      builder: (_) {
+                        return const LoadingDialog();
+                      },
+                    ),
+                    OrderCubit.get(context).searchForOrder(
+                      orderId: searchController.text,
+                      afterSuccess: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return const OrderDetailsDialog();
+                          },
+                        );
+                      },
+                    )
+                  };
                 },
                 width: 300,
                 height: 10,
@@ -115,176 +115,176 @@ class OrdersScreen extends StatelessWidget {
             }
             return OrderCubit.get(context).orderResponse!.orders!.isEmpty
                 ? Center(
-                    child: Image.asset(
-                      "assets/images/noOrder.png",
-                      height: 150,
-                    ),
-                  )
+              child: Image.asset(
+                "assets/images/noOrder.png",
+                height: 150,
+              ),
+            )
                 : CustomScrollView(
-                    scrollDirection: Axis.vertical,
-                    slivers: [
-                      SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Column(
-                          children: [
-                            DataTable(
-                              showCheckboxColumn: false,
-                              sortColumnIndex: 0,
-                              sortAscending: true,
-                              columns: [
-                                DataColumn(
-                                  label: Text(
-                                    translate('orderId'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('clientName'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('clientPhone'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('itemCount'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('total'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('vendor'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('branch'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('state'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('comment'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('actions'),
-                                  ),
-                                ),
-                              ],
-                              rows: OrderCubit.get(context)
-                                  .orderResponse!
-                                  .orders!
-                                  .map(
-                                    (data) => DataRow(
-                                      cells: [
-                                        DataCell(
-                                          Text(
-                                            data.id.toString(),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.clientName,
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.clientPhone,
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.itemCount.toString(),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.price.toString(),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.vendor,
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.branch,
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Container(
-                                            width: double.infinity,
-                                            height: 35,
-                                            decoration: BoxDecoration(
-                                              color: data.state == 'delivered'
-                                                  ? AppColors.green
-                                                  : data.state == 'rejected'
-                                                      ? AppColors.red
-                                                      : AppColors.orange,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: Center(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  translate(data.state),
-                                                  style: const TextStyle(
-                                                      color: AppColors.white,
-                                                      fontSize: 15),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            translate(data.comment),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Row(
-                                            children: [
-                                              DefaultIconButton(
-                                                width: 35,
-                                                buttonColor:
-                                                    AppColors.darkPurple,
-                                                iconColor: AppColors.white,
-                                                icon: Icons.location_pin,
-                                                onTap: () {
-                                                  _launchMapsUrl(
-                                                    data.lat,
-                                                    data.lon,
-                                                  );
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                  .toList(),
+              scrollDirection: Axis.vertical,
+              slivers: [
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Column(
+                    children: [
+                      DataTable(
+                        showCheckboxColumn: false,
+                        sortColumnIndex: 0,
+                        sortAscending: true,
+                        columns: [
+                          DataColumn(
+                            label: Text(
+                              translate('orderId'),
                             ),
-                          ],
-                        ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('clientName'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('clientPhone'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('itemCount'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('total'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('vendor'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('branch'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('state'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('comment'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('actions'),
+                            ),
+                          ),
+                        ],
+                        rows: OrderCubit.get(context)
+                            .orderResponse!
+                            .orders!
+                            .map(
+                              (data) => DataRow(
+                            cells: [
+                              DataCell(
+                                Text(
+                                  data.id.toString(),
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.clientName,
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.clientPhone,
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.itemCount.toString(),
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.price.toString(),
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.vendor,
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.branch,
+                                ),
+                              ),
+                              DataCell(
+                                Container(
+                                  width: double.infinity,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                    color: data.state == 'delivered'
+                                        ? AppColors.green
+                                        : data.state == 'rejected'
+                                        ? AppColors.red
+                                        : AppColors.orange,
+                                    borderRadius:
+                                    BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Padding(
+                                      padding:
+                                      const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        translate(data.state),
+                                        style: const TextStyle(
+                                            color: AppColors.white,
+                                            fontSize: 15),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  translate(data.comment),
+                                ),
+                              ),
+                              DataCell(
+                                Row(
+                                  children: [
+                                    DefaultIconButton(
+                                      width: 35,
+                                      buttonColor:
+                                      AppColors.darkPurple,
+                                      iconColor: AppColors.white,
+                                      icon: Icons.location_pin,
+                                      onTap: () {
+                                        _launchMapsUrl(
+                                          data.lat,
+                                          data.lon,
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                            .toList(),
                       ),
                     ],
-                  );
+                  ),
+                ),
+              ],
+            );
           },
         ));
   }

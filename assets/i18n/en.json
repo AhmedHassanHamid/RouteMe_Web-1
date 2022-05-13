@@ -88,5 +88,7 @@
   "tasksMap": "Tasks Map",
   "codeValidate": "Verification Code isn't Matched",
   "save": "Save Data",
-  "edit": "Edit User"
+  "edit": "Edit User",
+  "driverId": "Driver ID",
+  "dispatcherId": "Dispatcher ID"
 }
