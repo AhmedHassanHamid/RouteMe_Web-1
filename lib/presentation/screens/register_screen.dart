@@ -81,7 +81,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       DefaultTextField(
                         controller: phone,
-                        hintText: translate("hintPhone"),
+                        hintText: translate("phoneNum"),
                       ),
                       DefaultPasswordField(
                         password: passwordVisible,

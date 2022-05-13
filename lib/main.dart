@@ -11,10 +11,14 @@ import 'package:web/business_logic/app_cubit/app_state.dart';
 import 'package:web/business_logic/bloc_observer.dart';
 import 'package:web/business_logic/dispatchers_cubit/dispatchers_cubit.dart';
 import 'package:web/business_logic/drivers_cubit/drivers_cubit.dart';
+import 'package:web/business_logic/edit_user_cubit/edit_user_cubit.dart';
 import 'package:web/business_logic/language_cubit/language_cubit.dart';
 import 'package:web/business_logic/login_cubit/login_cubit.dart';
 import 'package:web/business_logic/orders_cubit/orders_cubit.dart';
+import 'package:web/business_logic/reset_password_cubit/reset_password_cubit.dart';
+import 'package:web/business_logic/tasks_cubit/tasks_cubit.dart';
 import 'package:web/business_logic/vendor_cubit/vendors_cubit.dart';
+import 'package:web/business_logic/verify_cubit/verify_cubit.dart';
 import 'package:web/data/remote/dio_helper.dart';
 import 'business_logic/delete_user_cubit/delete_user_cubit.dart';
 import 'data/local/cache_helper.dart';
@@ -78,10 +82,16 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: ((context) => AppCubit()..permission),
+          create: ((context) => AppCubit()),
         ),
         BlocProvider(
           create: ((context) => LoginCubit()),
+        ),
+        BlocProvider(
+          create: ((context) => VerifyCubit()),
+        ),
+        BlocProvider(
+          create: ((context) => ResetPasswordCubit()),
         ),
         BlocProvider(
           create: ((context) => LanguageCubit()),
@@ -90,7 +100,13 @@ class _MyAppState extends State<MyApp> {
           create: ((context) => DeleteUserCubit()),
         ),
         BlocProvider(
+          create: ((context) => EditUserCubit()),
+        ),
+        BlocProvider(
           create: ((context) => OrderCubit()..myOrders),
+        ),
+        BlocProvider(
+          create: ((context) => TasksCubit()..myTasks),
         ),
         BlocProvider(
           create: ((context) => DriversCubit()..myDrivers),
