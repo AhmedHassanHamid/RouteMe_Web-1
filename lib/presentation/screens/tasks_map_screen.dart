@@ -8,6 +8,11 @@ import 'package:web/data/models/task_model.dart';
 import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/screens/drawer_screen.dart';
 import 'package:web/presentation/widgets/toast.dart';
+import 'package:web/presentation/view/add_vendor_dialog.dart';
+import 'package:web/presentation/widgets/default_app_button.dart';
+import 'package:web/presentation/view/create_task_dialog.dart';
+
+
 
 class TasksMapScreen extends StatefulWidget {
   const TasksMapScreen({Key? key}) : super(key: key);
@@ -59,6 +64,33 @@ class _TasksMapScreenState extends State<TasksMapScreen> {
           ),
         ),
         centerTitle: true,
+       //CREATE TASK ZEE
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 10,
+              right: 10,
+              top: 5,
+              bottom: 5,
+            ),
+            child: DefaultAppButton(
+              text: translate("createTask"),
+              backGround: AppColors.darkPurple,
+              fontSize: 18,
+              height: 10,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (_) {
+                    return const CreateTaskDialog();
+                  },
+                );
+              },
+              width: 100,
+              textColor: AppColors.white,
+            ),
+          ),
+        ],
       ),
       body: BlocConsumer<TasksCubit, List<TaskModel>>(
         listener: (context, state) {},
