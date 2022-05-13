@@ -7,6 +7,8 @@ import 'package:web/business_logic/tasks_cubit/tasks_cubit.dart';
 import 'package:web/data/models/task_model.dart';
 import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/screens/drawer_screen.dart';
+import 'package:web/presentation/view/create_task_dialog.dart';
+import 'package:web/presentation/widgets/default_app_button.dart';
 import 'package:web/presentation/widgets/toast.dart';
 
 class TasksMapScreen extends StatefulWidget {
@@ -58,6 +60,32 @@ class _TasksMapScreenState extends State<TasksMapScreen> {
             ),
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 10,
+              right: 10,
+              top: 5,
+              bottom: 5,
+            ),
+            child: DefaultAppButton(
+              text: translate("createTask"),
+              backGround: AppColors.darkPurple,
+              fontSize: 18,
+              height: 10,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (_) {
+                    return const CreateTaskDialog();
+                  },
+                );
+              },
+              width: 100,
+              textColor: AppColors.white,
+            ),
+          ),
+        ],
         centerTitle: true,
       ),
       body: BlocConsumer<TasksCubit, List<TaskModel>>(
@@ -82,28 +110,28 @@ class _TasksMapScreenState extends State<TasksMapScreen> {
             ],
           )
               : FlutterMap(
-                  options: MapOptions(
-                    center: latlong.LatLng(
-                      TasksCubit.get(context).taskResponse!.tasks![0].lat,
-                      TasksCubit.get(context).taskResponse!.tasks![0].lon,
-                    ),
-                    zoom: 12.0,
-                  ),
-                  layers: [
-                    TileLayerOptions(
-                      urlTemplate:
-                          "https://api.mapbox.com/styles/v1/routeme2022/cl33l9s2c004u14ql00qo6t0o/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoicm91dGVtZTIwMjIiLCJhIjoiY2wzM2o1bnc4MDJ2dDNsa2JtaHhpc3IyciJ9.Xo0P7tRS4dIHvLptBUX0pg",
-                      additionalOptions: {
-                        'accessToken':
-                            "pk.eyJ1Ijoicm91dGVtZTIwMjIiLCJhIjoiY2wzM2o1bnc4MDJ2dDNsa2JtaHhpc3IyciJ9.Xo0P7tRS4dIHvLptBUX0pg",
-                        'id': "mapbox.mapbox-streets-v8"
-                      },
-                    ),
-                    MarkerLayerOptions(
-                      markers: TasksCubit.get(context).markers,
-                    ),
-                  ],
-                );
+            options: MapOptions(
+              center: latlong.LatLng(
+                TasksCubit.get(context).taskResponse!.tasks![0].lat,
+                TasksCubit.get(context).taskResponse!.tasks![0].lon,
+              ),
+              zoom: 12.0,
+            ),
+            layers: [
+              TileLayerOptions(
+                urlTemplate:
+                "https://api.mapbox.com/styles/v1/routeme2022/cl33l9s2c004u14ql00qo6t0o/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoicm91dGVtZTIwMjIiLCJhIjoiY2wzM2o1bnc4MDJ2dDNsa2JtaHhpc3IyciJ9.Xo0P7tRS4dIHvLptBUX0pg",
+                additionalOptions: {
+                  'accessToken':
+                  "pk.eyJ1Ijoicm91dGVtZTIwMjIiLCJhIjoiY2wzM2o1bnc4MDJ2dDNsa2JtaHhpc3IyciJ9.Xo0P7tRS4dIHvLptBUX0pg",
+                  'id': "mapbox.mapbox-streets-v8"
+                },
+              ),
+              MarkerLayerOptions(
+                markers: TasksCubit.get(context).markers,
+              ),
+            ],
+          );
         },
       ),
     );

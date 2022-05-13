@@ -31,7 +31,7 @@ late LocalizationDelegate delegate;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   BlocOverrides.runZoned(
-    () async {
+        () async {
       DioHelper.init();
       await CacheHelper.init();
       final locale =

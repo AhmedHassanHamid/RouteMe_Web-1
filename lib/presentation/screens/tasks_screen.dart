@@ -79,24 +79,24 @@ class TasksScreen extends StatelessWidget {
                   searchController.text == ''
                       ? showToast(translate('searchValidate'))
                       : {
-                          showDialog(
-                            context: context,
-                            builder: (_) {
-                              return const LoadingDialog();
-                            },
-                          ),
-                          TasksCubit.get(context).searchForTask(
-                            taskId: searchController.text,
-                            afterSuccess: () {
-                              showDialog(
-                                context: context,
-                                builder: (_) {
-                                  return const TaskDetailsDialog();
-                                },
-                              );
-                            },
-                          )
-                        };
+                    showDialog(
+                      context: context,
+                      builder: (_) {
+                        return const LoadingDialog();
+                      },
+                    ),
+                    TasksCubit.get(context).searchForTask(
+                      taskId: searchController.text,
+                      afterSuccess: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return const TaskDetailsDialog();
+                          },
+                        );
+                      },
+                    )
+                  };
                 },
                 width: 300,
                 height: 10,
@@ -115,174 +115,174 @@ class TasksScreen extends StatelessWidget {
             }
             return TasksCubit.get(context).taskResponse!.tasks!.isEmpty
                 ? Center(
-                    child: Image.asset(
-                      "assets/images/noOrder.png",
-                      height: 150,
-                    ),
-                  )
+              child: Image.asset(
+                "assets/images/noOrder.png",
+                height: 150,
+              ),
+            )
                 : CustomScrollView(
-                    scrollDirection: Axis.vertical,
-                    slivers: [
-                      SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Column(
-                          children: [
-                            DataTable(
-                              showCheckboxColumn: false,
-                              sortColumnIndex: 0,
-                              sortAscending: true,
-                              columns: [
-                                DataColumn(
-                                  label: Text(
-                                    translate('taskId'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('orderId'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('driver'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('clientName'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('clientPhone'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('itemCount'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('total'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('vendor'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('branch'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('state'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('comment'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    translate('actions'),
-                                  ),
-                                ),
-                              ],
-                              rows: TasksCubit.get(context)
-                                  .taskResponse!
-                                  .tasks!
-                                  .map(
-                                    (data) => DataRow(
-                                      cells: [
-                                        DataCell(
-                                          Text(
-                                            data.id.toString(),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.orderNumber.toString(),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.driver,
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.clientName,
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.clientPhone,
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.itemCount.toString(),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.price.toString(),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.vendor,
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            data.branch,
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            translate(data.status),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            translate(data.comment),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Row(
-                                            children: [
-                                              DefaultIconButton(
-                                                width: 35,
-                                                buttonColor:
-                                                    AppColors.darkPurple,
-                                                iconColor: AppColors.white,
-                                                icon: Icons.location_pin,
-                                                onTap: () {
-                                                  _launchMapsUrl(
-                                                    data.lat,
-                                                    data.lon,
-                                                  );
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                  .toList(),
+              scrollDirection: Axis.vertical,
+              slivers: [
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Column(
+                    children: [
+                      DataTable(
+                        showCheckboxColumn: false,
+                        sortColumnIndex: 0,
+                        sortAscending: true,
+                        columns: [
+                          DataColumn(
+                            label: Text(
+                              translate('taskId'),
                             ),
-                          ],
-                        ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('orderId'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('driver'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('clientName'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('clientPhone'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('itemCount'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('total'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('vendor'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('branch'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('state'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('comment'),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              translate('actions'),
+                            ),
+                          ),
+                        ],
+                        rows: TasksCubit.get(context)
+                            .taskResponse!
+                            .tasks!
+                            .map(
+                              (data) => DataRow(
+                            cells: [
+                              DataCell(
+                                Text(
+                                  data.id.toString(),
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.orderNumber.toString(),
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.driver,
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.clientName,
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.clientPhone,
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.itemCount.toString(),
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.price.toString(),
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.vendor,
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  data.branch,
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  translate(data.status),
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  translate(data.comment),
+                                ),
+                              ),
+                              DataCell(
+                                Row(
+                                  children: [
+                                    DefaultIconButton(
+                                      width: 35,
+                                      buttonColor:
+                                      AppColors.darkPurple,
+                                      iconColor: AppColors.white,
+                                      icon: Icons.location_pin,
+                                      onTap: () {
+                                        _launchMapsUrl(
+                                          data.lat,
+                                          data.lon,
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                            .toList(),
                       ),
                     ],
-                  );
+                  ),
+                ),
+              ],
+            );
           },
         ));
   }
