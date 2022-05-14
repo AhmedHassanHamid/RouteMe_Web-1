@@ -76,7 +76,6 @@ class DispatchersScreen extends StatelessWidget {
                     },
                   );
                 },
-                width: 100,
                 textColor: AppColors.white,
               ),
             ),

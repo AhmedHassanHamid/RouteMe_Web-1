@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DefaultAppButton extends StatelessWidget {
   final VoidCallback onTap;
   final String text;
-  final double width;
+  final double? width;
   final double height;
   final Color backGround;
   final Color textColor;
@@ -15,7 +15,7 @@ class DefaultAppButton extends StatelessWidget {
     required this.fontSize,
     required this.height,
     required this.onTap,
-    required this.width,
+    this.width,
     required this.textColor,
     Key? key,
   }) : super(key: key);
@@ -25,7 +25,7 @@ class DefaultAppButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: width,
+        width: width ?? 160,
         height: height,
         decoration: BoxDecoration(
           color: backGround,

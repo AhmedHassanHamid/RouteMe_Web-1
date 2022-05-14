@@ -81,7 +81,6 @@ class _TasksMapScreenState extends State<TasksMapScreen> {
                   },
                 );
               },
-              width: 100,
               textColor: AppColors.white,
             ),
           ),
