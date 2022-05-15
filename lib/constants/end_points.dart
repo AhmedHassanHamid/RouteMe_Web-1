@@ -3,6 +3,7 @@ const String login = "loginWeb";
 const String verify = "verifyCode";
 const String resetPassword = "resetPassword";
 const String searchOrders = "searchOrders";
+const String taskOrders = "taskOrders";
 const String updateUserStatus = "updateUserStatus";
 const String getUsers = "getUsers";
 const String deleteUser = "deleteUser";

@@ -36,6 +36,25 @@ class OrderCubit extends Cubit<List<OrderModel>> {
     });
     return orderResponse!.orders ?? ifNull;
   }
+  Future getTaskOrders() async {
+    await DioHelper.postData(
+      url: taskOrders,
+      body: {
+        'server': CacheHelper.getDataFromSharedPreference(key: "server"),
+      },
+    ).then((value) {
+      final myData = Map<String, dynamic>.from(value.data);
+      orderResponse = OrderResponse.fromJson(myData);
+      if (orderResponse!.status == 200) {
+        return orderResponse!.orders ?? ifNull;
+      } else {
+        return orderResponse!.message;
+      }
+    }).catchError((error) {
+      //showToast(error.toString());
+    });
+    return orderResponse!.orders ?? ifNull;
+  }
 
   Future searchForOrder({
     VoidCallback? afterSuccess,

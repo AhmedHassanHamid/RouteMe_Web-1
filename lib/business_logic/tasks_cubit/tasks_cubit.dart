@@ -89,12 +89,11 @@ class TasksCubit extends Cubit<List<TaskModel>> {
   }
 
   Future createNewTask({
-    required String orderNumber,
+
     required String driverId,
     required String driver,
-    required String dispatcherId,
-    required String clintName,
-    required String clintPhone,
+    required String clientName,
+    required String clientPhone,
     required String itemCount,
     required String price,
     required String vendorId,
@@ -106,7 +105,8 @@ class TasksCubit extends Cubit<List<TaskModel>> {
     required String start,
     required String end,
     required String comment,
-    required String status,
+
+
     required VoidCallback afterSuccess,
   })
   async {
@@ -114,12 +114,11 @@ class TasksCubit extends Cubit<List<TaskModel>> {
       url: createTask,
       body: {
         'server': CacheHelper.getDataFromSharedPreference(key: "server"),
-        'orderNumber': orderNumber,
+
         'driverId': driverId,
         'driver': driver,
-        'dispatcherId': dispatcherId,
-        'clintName': clintName,
-        'clintPhone': clintPhone,
+        'clientName': clientName,
+        'clientPhone': clientPhone,
         'itemCount': itemCount,
         'price': price,
         'vendorId': vendorId,
@@ -131,7 +130,7 @@ class TasksCubit extends Cubit<List<TaskModel>> {
         'start': start,
         'end': end,
         'comment': comment,
-        'status': status,
+
       },
     ).then((value) {
       final myData = Map<String, dynamic>.from(value.data);

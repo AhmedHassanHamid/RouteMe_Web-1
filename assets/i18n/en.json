@@ -90,5 +90,11 @@
   "save": "Save Data",
   "edit": "Edit User",
   "driverId": "Driver ID",
-  "dispatcherId": "Dispatcher ID"
+  "dispatcherId": "Dispatcher ID",
+  "start":"Start:",
+  "end":"End:",
+  "address": "Address",
+  "lon": "Langitude",
+  "lat": "Latitude"
+
 }

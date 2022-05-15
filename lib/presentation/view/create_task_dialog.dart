@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:web/business_logic/tasks_cubit/tasks_cubit.dart';
 import 'package:web/business_logic/vendor_cubit/vendors_cubit.dart';
@@ -20,12 +21,25 @@ class CreateTaskDialog extends StatefulWidget {
 }
 
 class _CreateTaskDialogState extends State<CreateTaskDialog> {
-  TextEditingController orderNumber = TextEditingController();
+  String dropdownValue = 'AM';
+  List<int> time =[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  int SelectedTime= 1;
+  String con = '';
+  String dropdownValuee = 'Task No.';
+  String drop = 'Driver Name';
+
+
+  void getDropDownItem(){
+
+    setState(() { con = '$SelectedTime';}
+      );
+  }
+
+
   TextEditingController driverId = TextEditingController();
   TextEditingController driver = TextEditingController();
-  TextEditingController dispatcherId = TextEditingController();
-  TextEditingController clintName = TextEditingController();
-  TextEditingController clintPhone = TextEditingController();
+  TextEditingController clientName = TextEditingController();
+  TextEditingController clientPhone = TextEditingController();
   TextEditingController itemCount = TextEditingController();
   TextEditingController price = TextEditingController();
   TextEditingController vendorId = TextEditingController();
@@ -37,7 +51,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
   TextEditingController start = TextEditingController();
   TextEditingController end = TextEditingController();
   TextEditingController comment = TextEditingController();
-  TextEditingController status = TextEditingController();
+
 
   bool passwordVisible = true;
 
@@ -47,12 +61,15 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
+
     fToast.init(context);
     return BlocConsumer<VendorsCubit, List<VendorModel>>(
       listener: (context, state) {},
       builder: (context, state) {
+
         return Scaffold(
           backgroundColor: AppColors.transparent,
           body: state.isEmpty
@@ -69,6 +86,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
               ),
               child: SingleChildScrollView(
                 child: Padding(
+
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,25 +117,61 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                       const SizedBox(
                         height: 8,
                       ),
-                      DefaultTextField(
-                        controller: orderNumber,
-                        hintText: translate("taskId"),
-                      ),
+                   DropdownButton<String>(
+              value: dropdownValuee,
+              icon: const Icon(Icons.arrow_downward),
+              elevation: 16,
+              style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValuee = newValue!;
+                });
+              },
+              items: <String>['Task No.','ali', 'moh']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
                       DefaultTextField(
                         controller: driverId,
                         hintText: translate("driverId"),
                       ),
-                      DefaultTextField(
-                        controller: driver,
-                        hintText: translate("driver"),
+                      DropdownButton<String>(
+                        value: drop,
+                        icon: const Icon(Icons.arrow_downward),
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.deepPurple),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            drop = newValue!;
+                          });
+                        },
+                        items: <String>['Driver Name','ali', 'moh']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
                       DefaultTextField(
-                        controller: dispatcherId,
-                        hintText: translate("dispatcherId"),
+                        controller: clientName,
+                        hintText: translate("clientName"),
                       ),
                       DefaultTextField(
-                        controller: clintName,
-                        hintText: translate("clintName"),
+                        controller: clientPhone,
+                        hintText: translate("clientPhone"),
                       ),
                       DefaultTextField(
                         controller: itemCount,
@@ -125,7 +179,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                       ),
                       DefaultTextField(
                         controller: price,
-                        hintText: translate("price"),
+                        hintText: translate("total"),
                       ),
                       DefaultTextField(
                         controller: vendorId,
@@ -151,22 +205,113 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                         controller: address,
                         hintText: translate("address"),
                       ),
+
                       DefaultTextField(
-                        controller: start,
+                        controller: address,
                         hintText: translate("start"),
+
+
                       ),
+                     Row(
+                       children: [
+                         Text('Start Task   ', textAlign: TextAlign.left),
+                         DropdownButton<int>(
+
+                        value: SelectedTime,
+                        icon: const Icon(Icons.arrow_downward),
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.deepPurple),
+
+                        onChanged: (newValue) {
+                          setState(() {
+                            SelectedTime = newValue!;
+                          });
+                        },
+                        items: time.map((time){
+                          return DropdownMenuItem(
+                              child: Text(time.toString()),
+                            value: time,
+                          );
+                        }).toList(),
+                        
+                      ),
+                      DropdownButton<String>(
+                        value: dropdownValue,
+                        icon: const Icon(Icons.arrow_downward),
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.deepPurple),
+
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue = newValue!;
+                          });
+                        },
+                        items: <String>['AM', 'PM'].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }
+                        ).toList(),
+                      ),
+
+                       ]
+
+                     ),
+
                       DefaultTextField(
                         controller: end,
                         hintText: translate("end"),
+                      ),
+
+                      Row(
+                          children: [
+                            Text('End Task    ', textAlign: TextAlign.left),
+                            DropdownButton<int>(
+                            value: SelectedTime,
+                            icon: const Icon(Icons.arrow_downward),
+                            elevation: 16,
+                            style: const TextStyle(color: Colors.deepPurple),
+
+                            onChanged: (newValue) {
+                              setState(() {
+                                SelectedTime = newValue!;
+                              });
+                            },
+                            items: time.map((time){
+                              return DropdownMenuItem(
+                                child: Text(time.toString()),
+                                value: time,
+                              );
+                            }).toList(),
+
+                          ),
+                            DropdownButton<String>(
+                              value: dropdownValue,
+                              icon: const Icon(Icons.arrow_downward),
+                              elevation: 16,
+                              style: const TextStyle(color: Colors.deepPurple),
+
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownValue = newValue!;
+                                });
+                              },
+                              items: <String>['AM', 'PM'].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }
+                              ).toList(),
+                            ),]
                       ),
                       DefaultTextField(
                         controller: comment,
                         hintText: translate("comment"),
                       ),
-                      DefaultTextField(
-                        controller: status,
-                        hintText: translate("status"),
-                      ),
+
+
                       const SizedBox(
                         height: 30,
                       ),
@@ -177,21 +322,15 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                           fontSize: 20,
                           height: 50,
                           onTap: () {
-                            orderNumber.text == ''
-                                ? showToast(
-                                translate('orderNumberValidate'))
-                                : driverId.text == ''
+                            driverId.text == ''
                                 ? showToast(
                                 translate('driverIdValidate'))
                                 : driver.text == ''
                                 ? showToast(
                                 translate('driverValidate'))
-                                : dispatcherId.text == ''
-                                ? showToast(translate(
-                                'dispatcherIdValidate'))
-                                : clintName.text == ''
+                                : clientName.text == ''
                                 ? showToast(
-                                translate('clintNameValidate'))
+                                translate('clientNameValidate'))
                                 : itemCount.text == ''
                                 ? showToast(
                                 translate('itemCountValidate'))
@@ -225,9 +364,6 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                 : comment.text == ''
                                 ? showToast(
                                 translate('commentValidate'))
-                                : status.text == ''
-                                ? showToast(
-                                translate('statusValidate'))
                                 : {
                               showDialog(
                                 context: context,
@@ -236,12 +372,11 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                 },
                               ),
                               TasksCubit.get(context).createNewTask(
-                                orderNumber: orderNumber.text,
+
                                 driverId: driverId.text,
                                 driver:driver.text,
-                                dispatcherId: dispatcherId.text,
-                                clintName: clintName.text,
-                                clintPhone: clintPhone.text,
+                                clientName: clientName.text,
+                                clientPhone: clientPhone.text,
                                 itemCount: itemCount.text,
                                 price: price.text,
                                 vendorId: vendorId.text,
@@ -250,10 +385,11 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                 lon: lon.text,
                                 lat: lat.text,
                                 address: address.text,
+
                                 start: start.text,
                                 end: end.text,
                                 comment: comment.text,
-                                status: status.text,
+
                                 afterSuccess: () => Navigator.pop(context),
                               ),
                             };
