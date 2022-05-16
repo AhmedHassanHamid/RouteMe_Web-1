@@ -5,8 +5,10 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:web/constants/end_points.dart';
 import 'package:web/data/local/cache_helper.dart';
 import 'package:web/data/models/task_model.dart';
+import 'package:web/data/network/responses/order_response.dart';
 import 'package:web/data/network/responses/successful_response.dart';
 import 'package:web/data/network/responses/task_response.dart';
+import 'package:web/data/network/responses/users_response.dart';
 import 'package:web/data/remote/dio_helper.dart';
 import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/widgets/toast.dart';
@@ -20,9 +22,12 @@ class TasksCubit extends Cubit<List<TaskModel>> {
   static TasksCubit get(context) => BlocProvider.of(context);
 
   TaskResponse? taskResponse, searchResponse;
+  OrderResponse? orderResponse;
+  UsersDataResponse? driverResponse;
   SuccessfulResponse? successfulResponse;
   final List<Marker> markers = [];
-
+  List<int> orderNumbers = [];
+  List<String> driversName = [];
   List<TaskModel> ifNull = [];
 
   Future getTasks() async {
@@ -92,9 +97,8 @@ class TasksCubit extends Cubit<List<TaskModel>> {
     required String orderNumber,
     required String driverId,
     required String driver,
-    required String dispatcherId,
-    required String clintName,
-    required String clintPhone,
+    required String clientName,
+    required String clientPhone,
     required String itemCount,
     required String price,
     required String vendorId,
@@ -114,12 +118,12 @@ class TasksCubit extends Cubit<List<TaskModel>> {
       url: createTask,
       body: {
         'server': CacheHelper.getDataFromSharedPreference(key: "server"),
+        'dispatcherId': CacheHelper.getDataFromSharedPreference(key: "userId"),
         'orderNumber': orderNumber,
         'driverId': driverId,
         'driver': driver,
-        'dispatcherId': dispatcherId,
-        'clintName': clintName,
-        'clintPhone': clintPhone,
+        'clientName': clientName,
+        'clientPhone': clientPhone,
         'itemCount': itemCount,
         'price': price,
         'vendorId': vendorId,
@@ -146,5 +150,56 @@ class TasksCubit extends Cubit<List<TaskModel>> {
     return successfulResponse!.message;
   }
 
+
+  Future getTaskOrders() async {
+    await DioHelper.postData(
+      url: taskOrders,
+      body: {
+        'server': CacheHelper.getDataFromSharedPreference(key: "server"),
+      },
+    ).then((value) {
+      final myData = Map<String, dynamic>.from(value.data);
+      orderResponse = OrderResponse.fromJson(myData);
+      if (orderResponse!.status == 200) {
+        for (int y = 0; y <= orderResponse!.orders!.length; y++) {
+          orderNumbers.add(orderResponse!.orders![y].id);
+        }
+        return orderResponse!.orders;
+      } else {
+        return orderResponse!.message;
+      }
+    }).catchError((error) {
+      //showToast(error.toString());
+    });
+    return orderResponse!.orders;
+  }
+
+
+  Future getDrivers() async {
+    await DioHelper.postData(
+      url: getUsers,
+      body: {
+        'type': "driver",
+        'server': CacheHelper.getDataFromSharedPreference(key: "server"),
+      },
+    ).then((value) {
+      final myData = Map<String, dynamic>.from(value.data);
+      driverResponse = UsersDataResponse.fromJson(myData);
+      if (driverResponse!.status == 200) {
+        for (int y = 0; y <= orderResponse!.orders!.length; y++) {
+          driversName.add(driverResponse!.user![y].name);
+        }
+        return driverResponse!.user ?? ifNull;
+      } else {
+        return driverResponse!.message;
+      }
+    }).catchError((error) {
+      //showToast(error.toString());
+    });
+    return driverResponse!.user ?? ifNull;
+  }
+
   void get myTasks async => emit(await getTasks());
+  void get myOrdersNumber async => emit(await getTaskOrders());
+  void get myDrivers async => emit(await getDrivers());
 }

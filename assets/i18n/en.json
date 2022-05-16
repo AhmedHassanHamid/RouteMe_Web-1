@@ -45,7 +45,7 @@
   "drivers": "Drivers",
   "vendors": "Vendors",
   "home": "Home",
-  "orderId": "Order ID",
+  "orderId": "Order Num",
   "itemCount": "Item Count",
   "clientName": "Client Name",
   "clientPhone": "Client Phone",
@@ -90,5 +90,12 @@
   "save": "Save Data",
   "edit": "Edit User",
   "driverId": "Driver ID",
-  "dispatcherId": "Dispatcher ID"
+  "dispatcherId": "Dispatcher ID",
+  "start":"Start :",
+  "end":"End :",
+  "address": "Address",
+  "lon": "Longitude",
+  "lat": "Latitude",
+  "hour": "Hour",
+  "shift": "Shift"
 }

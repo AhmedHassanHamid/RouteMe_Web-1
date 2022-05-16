@@ -110,7 +110,7 @@ class _MyAppState extends State<MyApp> {
           create: ((context) => OrderCubit()..myOrders),
         ),
         BlocProvider(
-          create: ((context) => TasksCubit()..myTasks),
+          create: ((context) => TasksCubit()..myTasks..myDrivers..myOrdersNumber),
         ),
         BlocProvider(
           create: ((context) => DriversCubit()..myDrivers),
